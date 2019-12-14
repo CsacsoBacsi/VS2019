@@ -31,7 +31,7 @@ label1:
 			scalarSPl	REAL4 1234566.89
 			scalarDP	REAL8 1234567890.12345
 			storedSP	dd 0.0
-			mytable		db 'abcdefghijk'
+			mytable		db 'abcdefghijklm'
 			float8		REAL4 1.0f			; 03f8 = 0000 0111 1111 1 - 000 00000000 00000000 00000000 00000000
 											; Sign: 0, Exponent: 127, Mantissa: 0
 

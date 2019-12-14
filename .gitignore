@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs
+/CSharpTutorial/CSharpTutorial/obj/Debug
+/WebApplication1/WebApplication1/obj/Debug
