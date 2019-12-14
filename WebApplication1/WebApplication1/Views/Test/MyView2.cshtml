@@ -1,0 +1,93 @@
+﻿
+@using WebApplication1.ViewModels
+@model MyView2Bag
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/ValidationFormOne.js"></script>
+    <title>MyView2</title>
+</head>
+<body>
+    <div>
+        Welcome to MVC 5 Step by Step learning
+    </div>
+
+    <!-- Hello Model.ELVM.Manager -->
+    Hello @(Model.ELVM.UserName)! 
+    <div><a href="/Auth/Logout">Logout</a></div> <br />
+    @{
+        Html.RenderAction("Admin") ;
+    }
+
+    <hr />
+    <div>
+        <table>
+            <tr>
+                <th>Employee Name</th>
+               <th>Salary</th>
+            </tr>
+            @foreach (EmployeeViewModel item in Model.ELVM.Employees)
+            {
+                <tr>
+                    <td>@item.EmployeeName</td>
+                    <td style="background-color:@item.SalaryColor">@item.Salary</td>
+                </tr>
+            }
+        </table>
+        @{
+            Html.RenderPartial ("Footer", Model.ELVM.FooterData) ;
+        }
+
+    </div>
+    <br />
+    Weakly typed version <br />
+    <form action="/FormOne/FormOneHandlerWT" id="FormOne" method="post">
+        Text <input type="text" name="TextBoxStringData" /> <br />
+        Checkbox <input type="checkbox" name="CheckBoxData" /> <br />
+        Number <input type="number" name="TextBoxIntData" /> <br />
+
+        <input type="submit" value="Submit weakly typed form" />
+    </form>
+    <br />
+    Strongly typed version <br />
+    <!-- using (Html.BeginForm ("FormOneHandlerST", "FormOne", FormMethod.Post)) -->
+    @{Html.BeginForm("FormOneHandlerST","Test",FormMethod.Post);}
+        @(Html.Label ("Text "))
+        @(Html.TextBoxFor (m => m.FODVM.TextBoxStringData, new {id = "TBSD" })) 
+        @if(!ViewData.ModelState.IsValid)
+        {
+            <span class="field-validation-error">
+                @ViewData.ModelState["TextBoxStringData"].Errors[0].ErrorMessage
+            </span>
+        }
+        <br />
+        @(Html.Label ("Checkbox "))
+        @(Html.CheckBoxFor (m => m.FODVM.CheckBoxData, new { id = "CBD" })) <br />
+        @(Html.Label ("Number "))
+        @(Html.TextBoxFor (m => m.FODVM.TextBoxIntData, new {id = "TBID", @Value = Model.FODVM.TextBoxIntData})) <br />
+        @if(!ViewData.ModelState.IsValid)
+        {
+            <span class="field-validation-error">
+                @ViewData.ModelState["FODVM.TextBoxIntData"].Errors[0].ErrorMessage <br />
+            </span>
+        }
+
+        <input type="submit" value="Submit strongly type synchronous form" onclick="return IsValid();" />
+    @{Html.EndForm();}
+
+    @{
+        string MyString = "<b>My Simple String</b>" ;
+        MvcHtmlString MyString2 = MvcHtmlString.Create (MyString) ;
+    }
+    @MyString <br />
+    @MyString2 @* HTML encoded so it is actually Bold *@
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+{
+    "Sudoku Grid": [
+        {
+            "cell number": 2,
+            "cell value": 2
+        },
+        {
+            "cell number": 4,
+            "cell value": 6
+        },
+        {
+            "cell number": 6,
+            "cell value": 8
+        },
+        {
+            "cell number": 10,
+            "cell value": 5
+        },
+        {
+            "cell number": 11,
+            "cell value": 8
+        },
+        {
+            "cell number": 15,
+            "cell value": 9
+        },
+        {
+            "cell number": 16,
+            "cell value": 7
+        },
+        {
+            "cell number": 23,
+            "cell value": 4
+        },
+        {
+            "cell number": 28,
+            "cell value": 3
+        },
+        {
+            "cell number": 29,
+            "cell value": 7
+        },
+        {
+            "cell number": 34,
+            "cell value": 5
+        },
+        {
+            "cell number": 37,
+            "cell value": 6
+        },
+        {
+            "cell number": 45,
+            "cell value": 4
+        },
+        {
+            "cell number": 48,
+            "cell value": 8
+        },
+        {
+            "cell number": 53,
+            "cell value": 1
+        },
+        {
+            "cell number": 54,
+            "cell value": 3
+        },
+        {
+            "cell number": 59,
+            "cell value": 2
+        },
+        {
+            "cell number": 66,
+            "cell value": 9
+        },
+        {
+            "cell number": 67,
+            "cell value": 8
+        },
+        {
+            "cell number": 71,
+            "cell value": 3
+        },
+        {
+            "cell number": 72,
+            "cell value": 6
+        },
+        {
+            "cell number": 76,
+            "cell value": 3
+        },
+        {
+            "cell number": 78,
+            "cell value": 6
+        },
+        {
+            "cell number": 80,
+            "cell value": 9
+        }
+    ]
+}

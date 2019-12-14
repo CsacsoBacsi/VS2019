@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Positioning test</title>
+</head>
+<body>
+
+
+<div id="div-1" style="background-color:orangered; width:300px">This is Div-1, a simple division block. This is the topmost one</div>
+
+<div id="div-2" style="position: relative; left:30px; top:0px;background-color:grey;width:600px;height:60px">
+
+    <div id="div-2a" style="float:left;background-color:blue; width:200px">This is Div-2a, a simple division block which is the child div of Div-2. This text should be long enough to see something</div>
+    <div id="div-2b" style="float:left; background-color:white; width:200px;margin-left:20px">This is Div-2b, a simple division block which is the child div of Div-2. This text should be long enough to see something</div>
+    <div id="div-2c" style="position:fixed; right:20px; top:10px;width:200px;background-color:yellow">This is Div-2c, a simple division block which is the child div of Div-2. This text should be long enough to see something</div>
+    <div id="div-2d" style="position:absolute; right:5px; top:5px;width:40px;height:50px;background-color:lightblue;">This is Div-2d. This part overflows</div>
+</div>
+
+<div id="div-3" style="background-color:green;">This is Div-3, a simple division block. This is the bottommost one</div>
+
+<div id="div-clear" style="clear:both">
+    <p>Original layout:</p>
+</div>
+
+<div id="div0-1" style="position:static; background-color:orangered; width:300px">This is Div-1, a simple division block. This is the topmost one</div>
+
+<div id="div0-2" style="position:relative; left:30px; top:0px;background-color:grey;width:600px;height:500px">
+    This is within Div-2 which is just a container for other four divs
+    <div id="div0-2a" style="position:static; background-color:blue; width:200px">This is Div-2a, a simple division block which is the child div of Div-2. This text should be long enough to see something</div>
+    <div id="div0-2b" style="position:static; background-color:white; width:200px;margin-left:20px">This is Div-2b, a simple division block which is the child div of Div-2. This text should be long enough to see something</div>
+    <div id="div0-2c" style="position:static; right:20px; top:10px;width:200px;background-color:yellow">This is Div-2c, a simple division block which is the child div of Div-2. This text should be long enough to see something</div>
+    <div id="div0-2d" style="position:static; right:5px; top:5px;width:40px;height:50px;background-color:lightblue;">This is Div-2d. This part overflows</div>
+</div>
+
+<div id="div0-3" style="position:static; background-color:green;">This is Div-3, a simple division block. This is the bottommost one</div>
+
+<div style="clear:both">
+    <p>New section with explanation</p>
+</div>
+
+<div id="1" style="position:static; background-color:blue; color:white">1 Position static, the default pos. Stretches as far as the screen width as no width is given</div>
+<div id="2" style="position:static; background-color:lightblue; width:200px">2 Position static. Stretches only 200px as width is given</div>
+<div id="3" style="position:relative; background-color:lightgreen; width:200px; top:-10px; left:20px;">3 Position relative. Width 200px, starts where previous DIV left off (where it should start normally from) offset:-10 top/20 left pixels</div>
+<div id="4" style="position:static; background-color:grey;">4 Position static. It is a container DIV. Stretches as far as it has to due its child-DIVs and its own content. Neither width nor height is specified ********* ********** ********* ********** ************ *********** ************** ********** *********** *********** ********* ***************
+    <div id="4a" style="position:static; background-color:yellow; width:100px">4a Position static. Sub DIV of width 100px</div>
+    <div id="4b" style="position:static; background-color:rosybrown; width:200px">4b Position static. Sub DIV of width 200px</div>
+</div>
+<p></p>
+<div id="5" style="position:relative; background-color:grey; width:600px; height:200px">5 Position relative. It is another container DIV. But width 600 and height 200 given!
+    <div id="5a" style="position:static; background-color:yellow; width:100px">5a Position static. Sub DIV of width 100px</div>
+    <div id="5b" style="position:static; background-color:rosybrown; width:200px">5b Position static. Sub DIV of width 200px</div>
+    <div id="5c" style="position:static; background-color:brown; color:white; width:200px">5c Position static. Sub DIV of width 200px. Can't fit within container so overflows. It will possibly collide with the next DIV</div>
+    <div id="5d" style="position:absolute; background-color:palevioletred; color:white; width:200px; bottom:10px; right:100px">5d Position absolute. Sub DIV of width 100 px. Placed within the container's bounds. Relative to that</div>
+</div>
+<div id="6" style="position:static; background-color:red; color:white; width:150px">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 6 Position static. Width 150 px. Starts where container 5 left off not where its children ended up hence the overlay</div>
+<p></p>
+<div id="7" style="position:static; background-color:grey; width:600px; height:230px;overflow:hidden">7 Position static. Width 600px, height 200px, it is another container DIV.
+    <div id="7a" style="float:left; background-color:yellow; width:100px; height:180px">7a Float left. Sub DIV of width 100px height 180px</div>
+    <div id="7b" style="float:right; background-color:rosybrown; width:100px">7b Float right. Sub DIV of width 100px</div>
+    <div id="7c" style="float:right; background-color:brown; color:white; width:200px; margin-right:10px">7c Float right. Sub DIV of width200 px. Next to the other float right</div>
+    <div id="7d" style="position:static; background-color:palevioletred; color:white; width:200px; bottom:10px; right:100px">7d Position static. Follows the text in 7 as that is the normal flow. The others are floating above!</div>
+    <div id="7e" style="position:static; clear:both; background-color:palevioletred; color:white; width:200px; bottom:10px; right:100px;">7e Position static. Follows the text in 7d as that is the normal flow. The others are floating above!</div>
+</div>
+<div id="8" style="position:static; background-color:red; color:white; width:150px">8 Position static. Width 150 px. Starts where container 7 left off not where its children ended up hence the overlay</div>
+<p></p>
+<div id="9" style="position:static; background-color:grey; width:500px; height:250px;overflow:hidden">
+    <div id="9a" style="float:left; background-color:yellow; width:100px; height:180px">9a Float left. Sub DIV of width 100px height 180px</div>
+    <div id="9b" style="float:left; background-color:rosybrown; width:100px">9b Float left. Sub DIV of width 100px</div>
+    <div id="9c" style="float:left;"> 9c Position static. Intentionally floats left</div>
+    <div id="9d" style="float:left;"> 9d Position static. Should float left as 9c next to the other two (9a and 9b) but because of its width, drops down below</div>
+    <div id="9e" style="float:left;"> 9e Position static. Follows 9d though specified as float</div>
+</div>
+<div id="10" style="position:static; background-color:red; color:white; width:150px">10 Position static. Width 150 px. Starts where container 9 left off not where its children ended up hence the overlay</div>
+
+<p></p>
+<div id="11" style="position:static; background-color:grey; width:500px; height:250px;">
+    <div id="11a" style="float:left; background-color:yellow; width:50%; height:50%">11a Float left. Width and height at 50% of its container</div>
+    <div id="11b" style="float:left; background-color:rosybrown; width:50%; height:25%">11b Float left. Sub DIV of width 50% height at 25%</div>
+    <div id="11c" style="float:left; background-color:brown; width:50%; height:25%">11c Float left. Width 50%, height at 25%</div>
+    <div id="11d" style="float:left; clear:left; background-color:rosybrown; width:50%; height:25%">11d Float left. Clear left! Sub DIV of width 50%, height 25%</div>
+    <div id="11e" style="float:left; background-color:lightgreen; width:25%; height:25%">11e Float left. Sub DIV with both width and height at 25%</div>
+    <div id="11f" style="float:left; background-color:magenta; width:25%; height:50%">11f Float left. Sub DIV with width 25% and height 50%</div>
+    <div id="11g" style="position:relative; clear:left; background-color:orange; bottom:25%; width:75%; height:25%">11g Position relative, clear left. Width 75% height 25%. Bottom relative 25%!</div>
+</div>
+
+
+
+<!--Rules:
+    1.  Original/default position is static. If no width is given, everything is laid out from top-bottom, left to right. The width is the full length of the viewport (screen)
+    2.  If width is given, the DIV stretches over multiple lines.
+    3.  With position relative, the next block (DIV) can be positioned relative to where it normally should go. Top-bottom-left-right works. Top:20px means 20px down the screen. Top:-20px
+        means 20px further up overlapping previous DIVs
+    4.  Container DIVs just work the same way. They encapsulate other DIVs  but their width and height can be overflowed by child DIVs if they do not have enough space. This only happens
+        if either or both width and height are given, otherwise they just stretch as far as they have to due to child-DIV sizes
+    4a. Sub-DIV that fits within its container 4
+    4b. Sub-DIV that goes below 4a as positioning within the DIV container is still static
+    5.  Another container DIV but this time with bound width and height. This means that its children DIVs may not fit within in which case they just overflow
+    5a, 5b and 5c. The 3 child DIVs are too big for the container. 5c overflows. This does not mean that the container's (5) size has changed
+    5d. Placed relative to its container's bound. The container must have position:relative in order this to work!
+    6.  The previous container overflowed, but the this DIV's static position is still there where the container's (5) bounds end. 5c covers part of the top of 6
+    7a. Float left. The DIV is taken out/lifted up in its container and positioned within its bounds
+    7b, 7c. Both are floating right, next to each other. 7c has a 10 pixel right margin so they do not touch each other
+    7d. Follows 7 (the container text) as the others are floating so the next position in the normal flow is that! Flows around 7a
+    7e. If we want the element to be cleared of any floating elements in either or both sides, we use clear:both. Without the overflow:hidden of the container 7, it would overlfow beyond the
+        boundaries of the container and would mix with 8
+    8.  Continues where 7 left off. 7e does not overflow on to it because 7 hides it
+    9.  Just another container
+    9a, 9b. Both float left in the container next to each other
+    9c  Floats next to 9a nad 9b because its width does not overflow the right margin of the container
+    9d  Specified as float but because of its size (width) it wraps below the floating 9a and 9b
+    9e  Just follows 9d although specified as float
+    10  Starts where comtainer 9 left off
+    11  Just another container
+    11a Floats left. Uses 50% width and height of its container
+    11b Floats left. Uses the other half of the container (50%) but only 25% height
+    11c Floats left. USes 50% width and the other 25% of height
+    11d Floats left, clear left so that it can float to the left first. Width 50% whereas height is 25%
+    11e Floats left uses only 25% of both width and height
+    11f Floats left, uses 25% of width and 50% of height
+    11g Clears left so that it can start left but has to use relative positioning becasue the previous element (11f) pushes it outside the container. To snap to the
+        other elements it has to use bottom 25% which means that it starts 25% from the bottom
+    -->
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+    "cars": {
+        "1": {
+            "type": "Honda",
+            "colour": "Green"},
+        "2": {
+            "type": "Opel",
+            "colour": "Red"}
+    }
+}

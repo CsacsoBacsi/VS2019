@@ -1,0 +1,3 @@
+﻿  Cplusplus.cpp
+d:\vs2017projects\tutorial\console\cplusplus\cplusplus.cpp(193): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Cplusplus.vcxproj -> D:\VS2017Projects\Tutorial\Console\x64\Debug\Cplusplus.exe

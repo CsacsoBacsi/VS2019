@@ -1,0 +1,4 @@
+﻿  Clib.cpp
+d:\vs2017projects\tutorial\console\clib\clib.cpp(152): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\vs2017projects\tutorial\console\clib\clib.cpp(154): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Clib.vcxproj -> D:\VS2017Projects\Tutorial\Console\x64\Debug\Clib.exe

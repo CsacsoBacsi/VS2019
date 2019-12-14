@@ -1,0 +1,4 @@
+﻿  Stdio.cpp
+d:\vs2017projects\tutorial\console\stdio\stdio.cpp(70): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\vs2017projects\tutorial\console\stdio\stdio.cpp(79): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Stdio.vcxproj -> D:\VS2017Projects\Tutorial\Console\x64\Debug\Stdio.exe

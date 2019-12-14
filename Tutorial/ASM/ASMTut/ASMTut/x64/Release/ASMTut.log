@@ -1,0 +1,6 @@
+﻿  Assembling MyASMFunc.asm...
+  ASM1.cpp
+  Generating code
+  All 13 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ASMTut.vcxproj -> D:\VS2015Projects\ASMtut\ASMTut\x64\Release\ASMTut.exe

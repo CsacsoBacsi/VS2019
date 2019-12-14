@@ -1,0 +1,7 @@
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\bin\x86\Debug\CSharpTutorial.exe.config
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\bin\x86\Debug\CSharpTutorial.exe
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\bin\x86\Debug\CSharpTutorial.pdb
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\obj\x86\Debug\CSharpTutorial.exe
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\obj\x86\Debug\CSharpTutorial.pdb
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\obj\x86\Debug\CSharpTutorial.csprojResolveAssemblyReference.cache
+D:\VS2017Projects\CSharpTutorial\CSharpTutorial\obj\x86\Debug\CSharpTutorial.csproj.CoreCompileInputs.cache

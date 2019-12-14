@@ -1,0 +1,121 @@
+            <form class="board" autocomplete="off">
+                <table >
+                <tbody>
+                <thead >
+                Fill in the 9X9 grid with digits from 1 to 9
+                </thead>
+                
+                    <tr>
+                        <td><input class="c v h bg-info" id="c11" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c12" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info" id="c13" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c14" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c15" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h" id="c16" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info " id="c17" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c18" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info " id="c19" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v h" id="c21" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c22" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h" id="c23" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c24" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c25" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info" id="c26" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c27" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c28" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h" id="c29" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v bg-info " id="c31" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  " id="c32" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   bg-info " id="c33" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  " id="c34" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v bg-info " id="c35" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c    " id="c36" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v bg-info" id="c37" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  " id="c38" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   bg-info " id="c39" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v h" id="c41" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c42" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h" id="c43" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info " id="c44" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c45" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info " id="c46" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c47" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info " id="c48" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h" id="c49" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v h bg-info " id="c51" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c52" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info " id="c53" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h" id="c54" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info " id="c55" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h" id="c56" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info " id="c57" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h " id="c58" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info " id="c59" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v  " id="c61" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v bg-info " id="c62" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c    " id="c63" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  bg-info" id="c64" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  " id="c65" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   bg-info " id="c66" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  " id="c67" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v bg-info " id="c68" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c    " id="c69" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v h bg-info" id="c71" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h  " id="c72" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info " id="c73" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h  " id="c74" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c75" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h  " id="c76" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c77" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h  " id="c78" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info" id="c79" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v h " id="c81" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info " id="c82" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h " id="c83" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c84" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h  " id="c85" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h bg-info" id="c86" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h " id="c87" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v h bg-info" id="c88" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   h " id="c89" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td><input class="c v bg-info " id="c91" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v  " id="c92" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c bg-info   " id="c93" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v " id="c94" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v bg-info " id="c95" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   " id="c96" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v bg-info " id="c97" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c v " id="c98" maxlength="1" autocomplete="off" /></td>
+                        <td><input class="c   bg-info " id="c99" maxlength="1" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                    </tr>
+                        <td style="padding-top:10px"align="center" colspan="9" >
+                            <input class="btn btn-primary  btn-lg " type="reset" style= padding-top:10px; />
+                            <input class="btn btn-success  btn-lg " type="button" value="Solve" onclick="javascript:solve()" />
+                        </td>
+                    </tr>
+                     <tr>
+                        <td align="center" colspan="9" id="message">
+                        </td>
+                    </tr>
+                    </tbody>
+    
+                </table>
+            </form>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>SudokuWeb</Name>
+    <RootNamespace>SudokuWeb</RootNamespace>
+    <WebBrowserPort>9000</WebBrowserPort>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>a5971cc8-8920-4a7d-a1dc-247013683627</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <WebBrowserUrl>http://localhost:9000/Sudoku/home</WebBrowserUrl>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <DjangoSettingsModule>SudokuWeb.settings</DjangoSettingsModule>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="SudokuSolver\code\ConstantsPy.py" />
+    <Compile Include="SudokuSolver\code\FunctionsPy.py" />
+    <Compile Include="SudokuSolver\code\Globals.py" />
+    <Compile Include="SudokuSolver\code\SudokuEnginePy.py" />
+    <Compile Include="SudokuSolver\forms.py" />
+    <Compile Include="SudokuSolver\models.py" />
+    <Compile Include="SudokuSolver\tests.py" />
+    <Compile Include="SudokuSolver\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SudokuSolver\views.py" />
+    <Compile Include="SudokuSolver\__init__.py" />
+    <Compile Include="SudokuSolver\migrations\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="SudokuWeb\__init__.py" />
+    <Compile Include="SudokuWeb\settings.py" />
+    <Compile Include="SudokuWeb\urls.py" />
+    <Compile Include="SudokuWeb\wsgi.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="static\" />
+    <Folder Include="SudokuSolver\code\" />
+    <Folder Include="templates\" />
+    <Folder Include="SudokuSolver\" />
+    <Folder Include="SudokuSolver\migrations\" />
+    <Folder Include="SudokuSolver\static\" />
+    <Folder Include="SudokuSolver\static\app\" />
+    <Folder Include="SudokuSolver\static\app\content\" />
+    <Folder Include="SudokuSolver\static\app\fonts\" />
+    <Folder Include="SudokuSolver\static\app\scripts\" />
+    <Folder Include="SudokuSolver\templates\" />
+    <Folder Include="SudokuSolver\templates\SudokuSolver\" />
+    <Folder Include="SudokuWeb\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
+    <Content Include="db.sqlite3" />
+    <Content Include="static\logo.png" />
+    <Content Include="static\slugify.js" />
+    <Content Include="static\solving.gif" />
+    <Content Include="static\stars.png" />
+    <Content Include="static\style.css" />
+    <Content Include="static\SudokuBG.jpg" />
+    <Content Include="SudokuSolver\code\Oracle.sql" />
+    <Content Include="SudokuSolver\static\app\content\bootstrap.css" />
+    <Content Include="SudokuSolver\static\app\content\bootstrap.min.css" />
+    <Content Include="SudokuSolver\static\app\content\site.css" />
+    <Content Include="SudokuSolver\static\app\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="SudokuSolver\static\app\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="SudokuSolver\static\app\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="SudokuSolver\static\app\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="SudokuSolver\static\app\scripts\bootstrap.js" />
+    <Content Include="SudokuSolver\static\app\scripts\bootstrap.min.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery-1.10.2.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery-1.10.2.min.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery-1.10.2.min.map" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery.validate-vsdoc.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery.validate.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery.validate.min.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="SudokuSolver\static\app\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="SudokuSolver\static\app\scripts\modernizr-2.6.2.js" />
+    <Content Include="SudokuSolver\static\app\scripts\respond.js" />
+    <Content Include="SudokuSolver\static\app\scripts\respond.min.js" />
+    <Content Include="SudokuSolver\static\app\scripts\_references.js" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\about.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\contact.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\DeleteGrid.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\index.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\LoadGrid.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\login.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\loginpartial.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\HomePage.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\SaveGrid.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\Test.html" />
+    <Content Include="SudokuSolver\templates\SudokuSolver\Test2.html" />
+    <Content Include="templates\base_layout.html" />
+    <Content Include="templates\Login.html" />
+    <Content Include="templates\Signup.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.html">
+      <SubType>WebBrowser</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

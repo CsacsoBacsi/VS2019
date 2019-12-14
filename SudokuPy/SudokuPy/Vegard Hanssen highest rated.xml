@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<SudokuGrid>
+  <CellValue GridRef="4">6</CellValue>
+  <CellValue GridRef="7">4</CellValue>
+  <CellValue GridRef="10">7</CellValue>
+  <CellValue GridRef="15">3</CellValue>
+  <CellValue GridRef="16">6</CellValue>
+  <CellValue GridRef="23">9</CellValue>
+  <CellValue GridRef="24">1</CellValue>
+  <CellValue GridRef="26">8</CellValue>
+  <CellValue GridRef="38">5</CellValue>
+  <CellValue GridRef="40">1</CellValue>
+  <CellValue GridRef="41">8</CellValue>
+  <CellValue GridRef="45">3</CellValue>
+  <CellValue GridRef="49">3</CellValue>
+  <CellValue GridRef="51">6</CellValue>
+  <CellValue GridRef="53">4</CellValue>
+  <CellValue GridRef="54">5</CellValue>
+  <CellValue GridRef="56">4</CellValue>
+  <CellValue GridRef="58">2</CellValue>
+  <CellValue GridRef="62">6</CellValue>
+  <CellValue GridRef="64">9</CellValue>
+  <CellValue GridRef="66">3</CellValue>
+  <CellValue GridRef="74">2</CellValue>
+  <CellValue GridRef="79">1</CellValue>
+</SudokuGrid>

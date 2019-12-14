@@ -1,0 +1,94 @@
+﻿{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        {% if language == 0 %}
+            <title>Sudoku Solver</title>
+        {% else %}
+            Sudoku megoldó
+        {% endif %}
+
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+
+        <script type="text/javascript">
+            function solving () {
+                //document.getElementById ("sudokusolver").style.display = "none"; // Hide the complete body
+                document.getElementById ("body").style.opacity = "0.5"
+                var pb = document.getElementById ("solving") ; // Get the element ID of the animated gif's DIV
+                pb.style.display = 'block' ; // Activate/show the animated GIF which is hidden (display:none) by default
+            }
+
+            function myAlert (msg, okay){
+                document.getElementById("opaque").style.opacity = "0.5";
+                var elem = document.createElement('div');
+                elem.style.cssText = 'position: absolute; top:0; left:0; width: 100%;height:100%;z-index:100;opacity:0.4;';
+                elem.id = 'over';
+                document.body.appendChild(elem);
+
+                document.body.innerHTML += '<div id="myAlertPrnt"> <div id="myAlert"> <table id="myAlert_table"> <tr id="myAlert_tr"> <td id="myAlert_td"><p id="myAlert_content"></p></td> </tr> <tr id="myAlert_tr"> <td id="myAlert_td"><button id="myAlert_ok" onclick="myAlertOked ()"></button></td> </tr> </table> </div> </div>'
+
+                document.getElementById('myAlert_content').innerHTML = msg;
+                document.getElementById ('myAlert_ok').innerHTML = okay;
+                document.body.style.cursor = "wait";
+            }
+
+            function myAlertOked(){
+                var parent = document.getElementById ('myAlertPrnt');
+                var child = document.getElementById ('myAlert');
+                parent.removeChild (child) ;
+                document.body.style.cursor = "default";
+                var element = document.getElementById('over');
+                var parent2 = document.getElementById ('body');
+                parent2.removeChild(element);
+                document.getElementById("opaque").style.opacity = "1";
+            }
+        </script>
+    </head>
+
+    <body id="body">
+        <div id="opaque">
+        <div style="float:left; width:20%;">.</div>
+        <div style="float:left; max-width:100%">
+            <h2 style="color:white; position: relative; left:440px">{% if language == 0 %} Solving the grid {% else %} A rács megoldása {% endif %}</h2>
+            {% if user.username != "" %}
+                <div style="float:left; margin-top:-20px; margin-left:770px; color:white"> {% if language == 0 %} Welcome {{user.username}} {% if user.is_superuser %} (admin) {% endif%}, Session start: {% else %} Üdvözlet {{user.username}} {% if user.is_superuser %} (admin) {% endif%}, A bejelentkezés kezdete: {% endif %} {{ user.last_login}} </div>
+            {% else %}
+                <div style="float:left; margin-top:-20px; margin-left:770px; color:white"> {% if language == 0 %} No user logged in {% else %} Nincs felhasználó bejelentkezve {% endif %}</div>
+            {% endif %}
+            <div style="position:relative; top: 30px">
+                <ul style="float:left; margin-left:380px; position:relative; top:-10px;">
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center" href="{% url 'SudokuSolver:home' %}">{% if language == 0 %} Home {% else %} Kezdőlap {% endif %}</a></li>
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="{% url 'SudokuSolver:load' %}">{% if language == 0 %} Load {% else %} Betölt {% endif %}</a></li> <!-- /?random={{ random }} -->
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="{% url 'SudokuSolver:save' %}">{% if language == 0 %} Save {% else %} Elment {% endif %}</a></li>
+                    {% if user.is_superuser %}
+                        <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="{% url 'SudokuSolver:delete' %}">{% if language == 0 %} Delete {% else %} Töröl {% endif %}</a></li>
+                    {% endif %}
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="#about">{% if language == 0 %} About {% else %} Rólam {% endif %}</a></li>
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="{% url 'SudokuSolver:test' %}">{% if language == 0 %} Test {% else %} Teszt {% endif %}</a></li>
+                </ul>
+            </div>
+        
+            <div id="sudokusolver" style="position:relative; top:85px; clear:both">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        <div style="float:left; width:25%;"></div>
+
+        <div id="solving" style="clear:both; display:none"> <img src="{% static 'solving.gif' %}" style="position:absolute; top:50%; left:50%; margin:auto; z-index:1000; width:80px; height:70px; cursor:wait;"></div>
+
+        <div id="footer" style="position:relative; clear:both; top:80px">
+            <hr>
+            <footer style="text-align:center; color:antiquewhite">
+                  Sudoku Solver - Powered by Python, Django and Oracle
+            </footer>
+        </div>
+        {% if request.session.message != "" %}
+            <script>
+                myAlert('{{ request.session.message }}', "OK") ;
+            </script>
+        {% endif %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,179 @@
+﻿{% load static from staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% if language == 0 %} Sudoku solver {% else %} Sudoku megoldó {% endif %}</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <script>
+            function myAlert (msg, okay){
+                document.getElementById("opaque").style.opacity = "0.5";
+                var elem = document.createElement('div');
+                elem.style.cssText = 'position: absolute; top:0; left:0; width: 100%;height:100%;z-index:100;opacity:0.4;';
+                elem.id = 'over';
+                document.body.appendChild(elem);
+
+                document.body.innerHTML += '<div id="myAlertPrnt"> <div id="myAlert"> <table id="myAlert_table"> <tr id="myAlert_tr"> <td id="myAlert_td"><p id="myAlert_content"></p></td> </tr> <tr id="myAlert_tr"> <td id="myAlert_td"><button id="myAlert_ok" onclick="myAlertOked ()"></button></td> </tr> </table> </div> </div>'
+
+                document.getElementById('myAlert_content').innerHTML = msg;
+                document.getElementById ('myAlert_ok').innerHTML = okay;
+                document.body.style.cursor = "wait";
+            }
+
+            function myAlertOked(){
+                var parent = document.getElementById ('myAlertPrnt') ;
+                var child = document.getElementById ('myAlert') ;
+                parent.removeChild (child) ;
+                document.body.style.cursor = "default";
+                var element = document.getElementById('over');
+                var parent2 = document.getElementById ('body') ;
+                parent2.removeChild(element);
+                document.getElementById("opaque").style.opacity = "1";
+            }
+        </script>
+    </head>
+    <body id="body"style="position:relative;">
+        <div id="opaque">
+        <div style="float:left; width:30%;">.</div>
+        <div style="float:left; margin-left:90px">
+            <div style="float:left; margin-top:10px; margin-left:600px; color:white">{% if language == 0 %} Welcome {{user.username}} {% if user.is_superuser %} (admin) {% endif%}, Session start: {% else %} Üdvözlet {{user.username}} {% if user.is_superuser %} (admin) {% endif%}, A bejelentkezés kezdete: {% endif %} {{ user.last_login}}</div>
+            <h2 style="color:white;position:relative; top:-10px; left:100px;">{% if language == 0 %} Saving the grid {% else %} A rács elmentése {% endif %}</h2>
+            <a style="position:relative; left:-30px; top:10px" href="{% url 'SudokuSolver:home' %}"><img src="{% static 'SudokuLogo.png' %}" alt="Sudoku Solver" width="130"></a>
+ 
+            <div style="position:relative; left:-30px; top: 0px">
+                <ul style="float:left; margin-left:160px; position:relative; top:-40px;">
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center" href="{% url 'SudokuSolver:home' %}">{% if language == 0 %} Home {% else %} Kezdőlap {% endif %}</a></li>
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="#about">{% if language == 0 %} About {% else %} Rólam {% endif %}</a></li>
+                    <li style="float:left;"><a style=" height:15px; vertical-align:central; align-content:center"href="{% url 'SudokuSolver:test' %}">{% if language == 0 %} Test {% else %} Teszt {% endif %}</a></li>
+                </ul>
+            </div>
+        
+            <div id="sudokusolver" style="position:relative; left:-30px; top:40px; clear:both">
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div style="float:left;">
+                        {% if form.non_field_errors %}
+                            <ul style="position: relative; top: -15px; margin-left:142px; background-color:white; color:red">
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <div class="field" style="position:relative; top:-35px; left:2px; width:137px; text-align:center"><b>{% if language == 0 %} Grid info {% else %} Rács infó {% endif %}</b></div>
+                        <table border="1" border-style="solid" style="position:relative; top:-33px">
+                            <tr>
+                                <th class="label">{% if language == 0 %} Title {% else %} Megnevezés {% endif %}</th>
+                                <td class="field">
+                                    {% if form.title.errors %}
+                                        <ul style="background-color:white; color:red">
+                                            {% for error in form.title.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {{ form.title }}
+                                    {% if form.title.help_text %}
+                                        <br />{{ form.title.help_text }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="label">{% if language == 0 %} Created date time {% else %} Létrehozás ideje {% endif %}</th>
+                                <td class="field">
+                                    {% if form.created_datetime.errors %}
+                                        <ul style="background-color:white; color:red">
+                                            {% for error in form.created_datetime.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {{ form.created_datetime }}
+                                    {% if form.created_datetime.help_text %}
+                                        <br />{{ form.created_datetime.help_text }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+    
+                            <tr>
+                                <th class="label">{% if language == 0 %} Time taken to solve {% else %} Megoldás időtartama {% endif %}</th>
+                                <td class="field">
+                                    {% if form.time_taken.errors %}
+                                        <ul style="background-color:white; color:red">
+                                            {% for error in form.time_taken.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {{ form.time_taken }} {% if language == 0 %} seconds {% else %} másodperc {% endif %}
+                                    {% if form.time_taken.help_text %}
+                                        <br />{{ form.time_taken.help_text }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                    
+                            <tr>
+                                <th class="label">{% if language == 0 %} Comment {% else %} Megjegyzés {% endif %}</th>
+                                <td class="field">
+                                    {% if form.comment.errors %}
+                                        <ul style="background-color:white; color:red">
+                                            {% for error in form.comment.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {{ form.comment }}
+                                    {% if form.comment.help_text %}
+                                        <br />{{ form.comment.help_text }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                     </div>
+
+                    <div style="clear:left; position:relative; left:110px; top:40px">
+                        <div class="field"; style="position:relative; top:-30px; left:3px; width:100px; text-align:center"><b>{% if language == 0 %} Starting grid {% else %} Kezdő rács {% endif %}</b></div>
+                        <button type="submit" name="resetit" style="position:relative; top:-83px; left:130px; height:40px; font-weight: bold; background-color: #ffcc99; width:65px">{% if language == 0 %} Save {% else %} Mentés {% endif %}</button>
+                        <table class="wh" cellspacing="1" style="position:relative; top:-66px;">
+                            {% for field in form.visible_fields %}
+                                {% if field.field.widget.attrs.celltype == 's' %}
+                                    {% if field.auto_id == "id_scell01" or field.auto_id == "id_scell10" or field.auto_id == "id_scell19" or field.auto_id == "id_scell28" or field.auto_id == "id_scell37" or field.auto_id == "id_scell46" or field.auto_id == "id_scell55" or field.auto_id == "id_scell64" or field.auto_id == "id_scell73" %}
+                                        <tr>
+                                    {% endif %}
+                                    <td>
+                                        {{ field }}
+                                    </td>
+                                    {% if field.auto_id == "id_scell09" or field.auto_id == "id_scell18" or field.auto_id == "id_scell27" or field.auto_id == "id_scell36" or field.auto_id == "id_scell45" or field.auto_id == "id_scell54" or field.auto_id == "id_scell63" or field.auto_id == "id_scell72" or field.auto_id == "id_scell81" %}
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div style="float:left; width:35%;">.</div>
+
+        <div id="solving" style="clear:both; display:none"> <img src="{% static 'solving.gif' %}" style="position:absolute; top:50%; left:50%; margin:auto; z-index:1000; width:80px; height:70px; cursor:wait;"></div>
+        
+        <div id="footer" style="position:relative; clear:both; top:100px">
+            <hr>
+            <footer style="text-align:center; color:antiquewhite">
+                  Sudoku Solver - Powered by Python, Django and Oracle
+            </footer>
+        </div>
+        {% if request.session.message != "" %}
+            <script>
+                myAlert('{{ request.session.message }}', "OK") ;
+            </script>
+        {% endif %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+﻿  PointersTut.cpp
+d:\vs2017projects\tutorial\console\pointerstut\pointerstut.cpp(85): warning C4311: 'type cast': pointer truncation from 'char *' to 'long'
+d:\vs2017projects\tutorial\console\pointerstut\pointerstut.cpp(85): warning C4302: 'type cast': truncation from 'char *' to 'long'
+d:\vs2017projects\tutorial\console\pointerstut\pointerstut.cpp(123): warning C4311: 'type cast': pointer truncation from 'char *' to 'long'
+d:\vs2017projects\tutorial\console\pointerstut\pointerstut.cpp(123): warning C4302: 'type cast': truncation from 'char *' to 'long'
+  PointersTut.vcxproj -> D:\VS2017Projects\Tutorial\Console\x64\Debug\PointersTut.exe

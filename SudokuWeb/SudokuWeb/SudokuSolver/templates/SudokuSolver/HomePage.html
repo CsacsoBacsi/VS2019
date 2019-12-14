@@ -1,0 +1,154 @@
+﻿{% extends 'base_layout.html' %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    <div style="float:left;">
+        <a style="position:relative; left:0px; top:-105px" href="{% url 'SudokuSolver:home' %}"><img src="{% static 'SudokuLogo.png' %}" alt="Sudoku Solver" width="130"></a>
+        <div class="field"; style="position:relative; top:-73px; left:3px; width:100px; text-align:center"><b>{% if language == 0 %} Starting grid {% else %} Kiinduló rács {% endif %}</b></div>
+        <button type="submit" name="resetit" style="position:relative; top:-104px; left:130px; height:30px; font-weight: bold; background-color: #ffcc99;">{% if language == 0 %} Reset {% else %} Töröl {% endif %}</button>
+        <table class="wh" cellspacing="1" style="position:relative; top:-100px;">
+            {% for field in form.visible_fields %}
+                {% if field.field.widget.attrs.celltype == 's' %}
+                    {% if field.auto_id == "id_scell01" or field.auto_id == "id_scell10" or field.auto_id == "id_scell19" or field.auto_id == "id_scell28" or field.auto_id == "id_scell37" or field.auto_id == "id_scell46" or field.auto_id == "id_scell55" or field.auto_id == "id_scell64" or field.auto_id == "id_scell73" %}
+                        <tr>
+                    {% endif %}
+                    <td>
+                        {{ field }}
+                    </td>
+                    {% if field.auto_id == "id_scell09" or field.auto_id == "id_scell18" or field.auto_id == "id_scell27" or field.auto_id == "id_scell36" or field.auto_id == "id_scell45" or field.auto_id == "id_scell54" or field.auto_id == "id_scell63" or field.auto_id == "id_scell72" or field.auto_id == "id_scell81" %}
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </table>
+        <div class="field"; style="position:relative; top:-72px; left:3px; width:90px; text-align:center"><b>{% if language == 0 %} Solved grid {% else %} Megoldás {% endif %}</b></div>
+        <button type="submit" name="solveit" style="position:relative; top:-105px; left:130px; height:30px; font-weight: bold; background-color: #ffcc99;" onclick="solving()">{% if language == 0 %} Solve {% else %} Megold {% endif %}</button>
+        <button type="submit" name="langhun" style="background-image: url(/static/HunFlag.gif); background-repeat: no-repeat; background-size: cover; width: 40px; height: 25px; position: relative; top: -540px; left: 710px;"></button>
+        <button type="submit" name="langeng" style="background-image: url(/static/BriFlag.gif); background-repeat: no-repeat; background-size: cover; width: 40px; height: 25px; position: relative; top: -540px; left: 730px;"></button>
+        {% if user.username != "" %}
+            <button type="submit" name="logout" style="width: 100px; height: 25px; position: relative; top: -550px; left: 800px; background-color: #ffcc99;"">{% if language == 0 %} Logout {% else %} Kijelentkezés {% endif %}</button>
+        {% else %}
+            <button type="submit" name="login" style="width: 100px; height: 25px; position: relative; top: -550px; left: 800px; background-color: #ffcc99;"">{% if language == 0 %} Login {% else %} Bejelentkezés {% endif %}</button>
+        {% endif %}
+        <table style="position:relative; top:-105px" class="wh" cellspacing="1">
+            {% for field in form.visible_fields %}
+                {% if field.field.widget.attrs.celltype == 't' %}
+                    {% if field.auto_id == "id_tcell01" or field.auto_id == "id_tcell10" or field.auto_id == "id_tcell19" or field.auto_id == "id_tcell28" or field.auto_id == "id_tcell37" or field.auto_id == "id_tcell46" or field.auto_id == "id_tcell55" or field.auto_id == "id_tcell64" or field.auto_id == "id_tcell73" %}
+                        <tr>
+                    {% endif %}
+                    <td>
+                        {{ field }}
+                    </td>
+                    {% if field.auto_id == "id_tcell09" or field.auto_id == "id_tcell18" or field.auto_id == "id_tcell27" or field.auto_id == "id_tcell36" or field.auto_id == "id_tcell45" or field.auto_id == "id_tcell54" or field.auto_id == "id_tcell63" or field.auto_id == "id_tcell72" or field.auto_id == "id_tcell81" %}
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+    <div style="float:left; margin-left:60px">
+        {% if form.non_field_errors %}
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="field" style="position:relative; top:-25px; left:2px; width:140px; text-align:center"><b>{% if language == 0 %} Saved grid info {% else %} Lementett rács infó {% endif %}
+            </b></div>
+
+        <table border="1" border-style="solid" style="position:relative; top:-23px">
+            <tr>
+                <th class="label">{% if language == 0 %} Title {% else %} Megnevezés {% endif %}</th>
+                <td class="field">
+                    {% if form.title.errors %}
+                        <ul>
+                            {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {{ form.title }}
+                    {% if form.title.help_text %}
+                        <br />{{ form.title.help_text }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class="label">{% if language == 0 %} Created date time {% else %} Létrehozás ideje {% endif %}</th>
+                <td class="field">
+                    {% if form.created_datetime.errors %}
+                        <ul>
+                            {% for error in form.created_datetime.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {{ form.created_datetime }}
+                    {% if form.created_datetime.help_text %}
+                         <br />{{ form.created_datetime.help_text }}
+                    {% endif %}
+                </td>
+            </tr>
+    
+            <tr>
+                <th class="label">{% if language == 0 %} Time taken to solve {% else %} Megoldás időtartama {% endif %}</th>
+                <td class="field">
+                    {% if form.time_taken.errors %}
+                        <ul>
+                            {% for error in form.time_taken.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {{ form.time_taken }} {% if language == 0 %} seconds {% else %} másodperc {% endif %}
+                    {% if form.time_taken.help_text %}
+                        <br />{{ form.time_taken.help_text }}
+                    {% endif %}
+                </td>
+            </tr>
+    
+            <tr>
+                <th class="label">{% if language == 0 %} Comment {% else %} Megjegyzés {% endif %}</th>
+                <td class="field">
+                    {% if form.comment.errors %}
+                        <ul>
+                            {% for error in form.comment.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                       </ul>
+                    {% endif %}
+                    {{ form.comment }}
+                    {% if form.comment.help_text %}
+                        <br />{{ form.comment.help_text }}
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+        <div style="position:relative; top: 12px">
+            <div class="field"; style="position:relative; top:-21px; left:2px; width:140px; text-align:center"><b>{% if language == 0 %} Solver log {% else %} Megoldó napló {% endif %}</b></div>
+            <div style="position:relative; top:-19px">
+                {% if form.log_window.errors %}
+                    <ul>
+                        {% for error in form.log_window.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {{ form.log_window }}
+                {% if form.log_window.help_text %}
+                    <br />{{ form.log_window.help_text }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

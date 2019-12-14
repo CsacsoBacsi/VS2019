@@ -1,0 +1,6 @@
+﻿  Assembling FirstWin32.asm...
+FirstWin32.asm(180): warning A6004: procedure argument or local not referenced : hPrevInst
+FirstWin32.asm(180): warning A6004: procedure argument or local not referenced : CmdLine
+FirstWin32.asm(180): warning A6004: procedure argument or local not referenced : CmdShow
+  Assembling MyProc.asm...
+  FirstWin32Proj.vcxproj -> F:\Asm\32bit\FirstWin32\Debug\FirstWin32Proj.exe

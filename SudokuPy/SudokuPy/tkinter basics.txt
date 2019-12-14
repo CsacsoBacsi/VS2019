@@ -1,0 +1,36 @@
+ The simplest, non-OO Tkinter program is going to look like the following example. Note that this is a python 2.x example, and I do not use a global import since I think global imports are bad. 
+
+import Tkinter as tk
+root = tk.Tk()
+<your widgets go here>
+root.mainloop()
+
+Many people find that a pure procedural style is not an effective way to write code, so they might choose to write this in an object-oriented style. It's natural to think of "the app" as a singleton object. There are many ways to do this -- the one in your question is, unfortunately, not one of the clearer ways to do it. 
+A slightly better way, IMO, would be to structure the code like this:
+
+class App(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        <your widgets go here>
+app = App()
+app.mainloop()
+
+In this case, mainloop is still being called, though now it's a method of App since App inherits from Tk. It is conceptually the same as root.mainloop() since in this case, app is the root window even though it goes by a different name.
+So, in both cases, mainloop is a method that belongs to the root window. And in both cases, it must be called for the GUI to function properly. 
+
+There is a third variation which is what the code you picked is using. And with this variation, there are several ways to implement it. The variation is your question uses a class to define the GUI, but does not inherit from Tk. This is perfectly fine, but you still must call mainloop at some point. Since you don't create (or inherit) a mainloop function in your class, you must call the one associated with the root window. The variations I speak of are how and where the instance of App is added to the root window, and how mainloop is ultimately called.
+Personally I prefer that App inherits from Frame, and that you pack the app outside the definition of the app. The template I use looks like this:
+
+class App(tk.Frame):
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
+        <your widgets go here>
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    app.pack(fill="both", expand=True)
+    root.mainloop()
+
+In this final example, app and root are two completely different objects. app represents a frame that exists inside the root window. Frames are commonly used this way, as a container for groups of other widgets. 
+So, in all cases, mainloop must be called. where it is called, and how, depends a bit on your coding style. Some people prefer to inherit from the root window, some don't. In either case, you must call the mainloop function of the root window. 

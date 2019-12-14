@@ -1,0 +1,2 @@
+D:\VS2017Projects\DjangoForms\DjangoForms\obj\Debug\DjangoForms.pyproj.CoreCompileInputs.cache
+C:\Users\c23833\VS2017\DjangoForms\DjangoForms\obj\Debug\DjangoForms.pyproj.CoreCompileInputs.cache

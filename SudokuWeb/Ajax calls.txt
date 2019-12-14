@@ -1,0 +1,51 @@
+views.py
+
+def hello(request):
+    return HttpResponse('Hello World!')
+
+def home(request):
+    return render_to_response('index.html', {'variable': 'world'})
+
+index.html:
+
+<h1>Hello {{ variable }}, welcome to my awesome site</h1>
+
+urls.py
+
+url(r'^hello/', 'myapp.views.hello'),
+url(r'^home/', 'myapp.views.home'),
+
+That's an example of the simplest of usages. Going to 127.0.0.1:8000/hello means a request to the hello function, going to 127.0.0.1:8000/home will return the index.html and replace all the variables as asked (you probably know all this by now).
+
+Now let's talk about AJAX. AJAX calls are client-side code that does asynchronous requests. That sounds complicated, but it simply means it does a request for you in the background and then handles the response. So when you do an AJAX call for some url, you get the same data you would get as a user going to that place.
+
+For example, an ajax call to 127.0.0.1:8000/hello will return the same thing it would as if you visited it. Only this time, you have it inside a js function and you can deal with it however you'd like. Let's look at a simple use case:
+
+$.ajax({
+    url: '127.0.0.1:8000/hello',
+    type: 'get', // This is the default though, you don't actually need to always mention it
+    success: function(data) {
+        alert(data);
+    },
+    failure: function(data) { 
+        alert('Got an error dude');
+    }
+}); 
+
+The general process is this:
+
+    The call goes to the url 127.0.0.1:8000/hello as if you opened a new tab and did it yourself.
+    If it succeeds (status code 200), do the function for success, which will alert the data recieved.
+    If fails, do a different function.
+
+Now what would happen here? You would get an alert with 'hello world' in it. What happens if you do an ajax call to home? Same thing, you'll get an alert stating <h1>Hello world, welcome to my awesome site</h1>.
+
+In other words - there's nothing new about AJAX calls. They are just a way for you to let the user get data and information without leaving the page, and it makes for a smooth and very neat design of your website. A few guidelines you should take note of:
+
+    Learn jQuery. I cannot stress this enough. You're gonna have to understand it a little to know how to handle the data you receive. You'll also need to understand some basic javascript syntax (not far from python, you'll get used to it). I strongly recommend Envato's video tutorials for jQuery, they are great and will put you on the right path.
+    When to use JSON?. You're going to see a lot of examples where the data sent by the Django views is in JSON. I didn't go into detail on that, because it isn't important how to do it (there are plenty of explanations abound) and a lot more important when. And the answer to that is - JSON data is serialized data. That is, data you can manipulate. Like I mentioned, an AJAX call will fetch the response as if the user did it himself. Now say you don't want to mess with all the html, and instead want to send data (a list of objects perhaps). JSON is good for this, because it sends it as an object (JSON data looks like a python dictionary), and then you can iterate over it or do something else that removes the need to sift through useless html.
+    Add it last. When you build a web app and want to implement AJAX - do yourself a favor. First, build the entire app completely devoid of any AJAX. See that everything is working. Then, and only then, start writing the AJAX calls. That's a good process that helps you learn a lot as well.
+    Use chrome's developer tools. Since AJAX calls are done in the background it's sometimes very hard to debug them. You should use the chrome developer tools (or similar tools such as firebug) and console.log things to debug. I won't explain in detail, just google around and find out about it. It would be very helpful to you.
+    CSRF awareness. Finally, remember that post requests in Django require the csrf_token. With AJAX calls, a lot of times you'd like to send data without refreshing the page. You'll probably face some trouble before you'd finally remember that - wait, you forgot to send the csrf_token. This is a known beginner roadblock in AJAX-Django integration, but after you learn how to make it play nice, it's easy as pie.
+
+That's everything that comes to my head. It's a vast subject, but yeah, there's probably not enough examples out there. Just work your way there, slowly, you'll get it eventually.

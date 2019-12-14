@@ -1,0 +1,11 @@
+﻿  Declarations.cpp
+d:\vs2017projects\sudoku\sudokuwin\sudokuwin\declarations.cpp(267): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Functions.cpp
+d:\vs2017projects\sudoku\sudokuwin\sudokuwin\functions.cpp(809): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  SuDoKuGrid.cpp
+d:\vs2017projects\sudoku\sudokuwin\sudokuwin\sudokugrid.cpp(76): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  SuDoKuMain.cpp
+d:\vs2017projects\sudoku\sudokuwin\sudokuwin\sudokumain.cpp(1106): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  SuDoKuEngine.cpp
+d:\vs2017projects\sudoku\sudokuwin\sudokuwin\sudokuengine.cpp(520): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Generating Code...

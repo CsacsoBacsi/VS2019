@@ -1,0 +1,53 @@
+﻿<!-- model WebApplication1.Models.Employee  Strongly typed view  -->
+@using WebApplication1.ViewModels
+@model EmployeeViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MyView</title>
+</head>
+<body>
+    <div>
+        Welcome to MVC 5 Step by Step learning 
+    </div>
+
+    <div>
+    @{
+        WebApplication1.Models.Employee emp = // Get the object the controller placed there from ViewData. This is one sort of method. Strongly typed views is a better one
+                (WebApplication1.Models.Employee)ViewData["Employee"] ; // The collection holds Objects so it has to be back-cast. View developer may not know this
+    }
+
+    <b>Employee Details </b><br />
+       Employee Name : @emp.FirstName @emp.LastName <br />
+       Employee Salary: @emp.Salary.ToString("C") <br />
+       
+        @if (emp.Salary > 15000) // Logic in View is not good. Should be separated
+        {
+            <span style="background-color:yellow">
+                Employee Salary: @emp.Salary.ToString("C")
+            </span>
+        }
+        else
+        {
+            <span style="background-color:green">
+                Employee Salary: @emp.Salary.ToString("C")
+            </span>
+        }
+
+        <br />With ViewModel <br />
+        @Model.EmployeeName <br />
+        <span style="background-color:@Model.SalaryColor">
+            Employee Salary: @Model.Salary
+        </span>
+
+
+    </div>
+</body>
+</html>
