@@ -25,7 +25,7 @@ label1:
 			multiplier	dq 16d
 			source		dq 'abcdefgh', 'ijklmnop', 'qrstuvwx', 'yyyyzzzz'
 			dest		dq '        ', '        ', '        ', 'yyyyzzzz'
-			bittest		dw 1010101010101010
+			bittest		dw 1010101010101010b
 			ALIGN 16
 			scalarSP	REAL4 1234567.89
 			scalarSPl	REAL4 1234566.89
