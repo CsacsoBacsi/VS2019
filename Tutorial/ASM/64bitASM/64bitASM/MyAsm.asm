@@ -34,9 +34,9 @@ label1:
 			mytable		db 'abcdefghijklm '
 			myint		dw 258				; 0102 = 0000 0001 0000 0010
 			float8		REAL8 12.375f		; 4028c0 = 0|100 0000 0010 | 1000 1100 0000
-											; Sign: 0 Exponent: 1023 + 3  Mantissa: 1|10001100
-											; 12.375 in binary = 1100.011. After dec point: 0*1/2 + 1*1/4 + 1*1/8
-											; Move deciaml left 3x. That is the exponent. 1.100011
+											; Sign: 1 bit: 0 Exponent: 11 bits: 1023 + 3  Mantissa: Implicit first bit is always 1, not stored. 1|1000 1100
+											; 12.375 in binary = 1100.011. After dec point: 0*1/2 + 1*1/4 + 1*1/8 = 0*0.5 + 1*0.250 + 1*0.125 = 0.375
+											; Move decimal left 3x. That is the exponent (3). Normalized value: 1.100011 *2^3
 											; Exponent = bias (1023) + 3 = 1026
 											; Mantissa = Implicit first bit is always 1 - not stored
 											; then the number: 1000 1100 Rest is all zeros
