@@ -31,9 +31,15 @@ label1:
 			scalarSPl	REAL4 1234566.89
 			scalarDP	REAL8 1234567890.12345
 			storedSP	dd 0.0
-			mytable		db 'abcdefghijklm'
-			float8		REAL4 1.0f			; 03f8 = 0000 0111 1111 1 - 000 00000000 00000000 00000000 00000000
-											; Sign: 0, Exponent: 127, Mantissa: 0
+			mytable		db 'abcdefghijklm '
+			myint		dw 258				; 0102 = 0000 0001 0000 0010
+			float8		REAL8 12.375f		; 4028c0 = 0|100 0000 0010 | 1000 1100 0000
+											; Sign: 0 Exponent: 1023 + 3  Mantissa: 1|10001100
+											; 12.375 in binary = 1100.011. After dec point: 0*1/2 + 1*1/4 + 1*1/8
+											; Move deciaml left 3x. That is the exponent. 1.100011
+											; Exponent = bias (1023) + 3 = 1026
+											; Mantissa = Implicit first bit is always 1 - not stored
+											; then the number: 1000 1100 Rest is all zeros
 
 .data?										; Uninitialized data section
 			retval		dq ?
