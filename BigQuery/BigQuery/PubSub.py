@@ -1,4 +1,4 @@
-# Standalone script to test Pub/Sub
+# Standalone script to test Pub/Sub features
 from __future__ import absolute_import
 from google.cloud import pubsub_v1
 

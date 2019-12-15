@@ -1,4 +1,4 @@
-# Creates a pipeline that listens to Pub/Sub topic messages streamed from ORacle db and processes them
+# Creates a pipeline that listens to Pub/Sub topic messages streamed from Oracle db and processes them
 from __future__ import absolute_import
 
 from google.cloud import bigquery

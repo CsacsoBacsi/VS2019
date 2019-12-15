@@ -5,7 +5,7 @@
     <ProjectGuid>eec3a63b-dc85-4f91-afab-15182f76752f</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Zero-Pipeline.py</StartupFile>
+    <StartupFile>DataFlowPubSub1M.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -39,6 +39,9 @@
     <Compile Include="LoadCSV.py" />
     <Compile Include="LoadJSON.py" />
     <Compile Include="Metadata.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataFlowPubSub1M.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Oracle2BigQuery.py">
