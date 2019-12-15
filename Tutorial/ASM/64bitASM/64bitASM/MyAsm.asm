@@ -40,6 +40,13 @@ label1:
 											; Exponent = bias (1023) + 3 = 1026
 											; Mantissa = Implicit first bit is always 1 - not stored
 											; then the number: 1000 1100 Rest is all zeros
+			f8_zero		REAL8 0.0f			; Zero all bits
+			f8_small	REAL8 0.375f		; 3fd8 = 0|011 1111 1101 | 1000
+											; Binary = 0.011. Move decimal point right 2x
+											; Exponent = bias (1023) - 2 = 1021
+											; Mantissa = Implicit first bit is always 1 - not stored
+											; then the number: 1000 Rest is all zeros
+			f8_tiny		REAL8 0.001f		; 3f50624dd2f1a9fc3fd8
 
 .data?										; Uninitialized data section
 			retval		dq ?
@@ -54,6 +61,7 @@ label1:
 start:
 			call	main
 			xor		rax, rax				; Exitcode = 0
+			xor     rbx, rbx
 ;			call	ExitProcess
 
 	main proc
