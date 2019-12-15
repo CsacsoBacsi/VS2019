@@ -772,7 +772,7 @@ positive1:	xor		rax, rax
 			; Alternative. Uses RBP to address parameters (above the return address) and RSP to address local variables
 alternative:
 			push	rbp
-			push	rdi
+			push	rdi						; RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15 are considered non-volatile so need saving on stack
 			mov		rbp, rsp				; It could also be done this way. Local vars under RBP, parameters above.
 			sub		rsp, 10h				; Allocate space for 2, 64 bit local variables
 
@@ -792,13 +792,13 @@ alternative:
 			; RSP + 08h -> lvar2			; Local variables
 			; RSP + 00h -> lvar1
 
-			; Parameters are RBP related, local variables RSP - that is the convention
-			mov		rax, qword ptr [rbp+18h]; Add the 6 parameters and the 2 local variables together
-			mov		rcx, qword ptr [rbp+20h]
-			add		rax, rcx
-			add		rax, qword ptr [rbp+28h]
-			add		rax, qword ptr [rbp+30h]
-			add		rax, qword ptr [rbp+38h]
+			; Parameters are RBP related, local variables RSP - that is the convention. Add the 6 parameters and the 2 local variables together
+			mov		rax, qword ptr [rbp+18h] ; Could be mov rax, rcx
+			mov		rcx, qword ptr [rbp+20h] ; Could be add rax, rdx
+			add		rax, rcx				 ; Should be non-existent
+			add		rax, qword ptr [rbp+28h] ; Could be mov rcx, r8
+			add		rax, qword ptr [rbp+30h] ; Could be mov rcx, r9
+			add		rax, qword ptr [rbp+38h] 
 			add		rax, qword ptr [rbp+40h]
 			add		rax, qword ptr [rsp+08h]
 			add		rax, qword ptr [rsp]
