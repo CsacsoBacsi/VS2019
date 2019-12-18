@@ -51,26 +51,27 @@ class myThread (threading.Thread):
       
     def run (self): # Upon thread.start this function executes unless target = func and args = (1,2) specified. Func with args must be defined first
         print ("Starting thread " + self.name)
-        print ("Waiting 3 secs...")
-        time.sleep (3)
+        print ("Waiting 1 sec(s)...")
+        time.sleep (1)
         publisher = pubsub_v1.PublisherClient () # Creates a publisher client
         topic_name = 'projects/{project_id}/topics/{topic}'.format(project_id = PROJECT, topic = TOPIC)
 
         print ("Publishing messages...")
-        for i in range (1, 1001, 1):
-            publisher.publish (topic_name, bytes ("Message #{} - ".format (str (i)), 'utf-8'))
+        for i in range (1, 10001, 1):
+            publisher.publish (topic_name, bytes ("Msg #{} ".format (str (i)), 'utf-8'))
         publisher.publish (topic_name, bytes ("END", 'utf-8')) # So that the file can be closed
         print ("Done publishing messages!")
         #print ("Creating/opening file for append...")
         #completeName = os.path.join ("D:/", "output.txt")
         #global ofile
         #ofile = open (completeName, "a+")
-        print ("Sleeping for another 10 secs...")
-        time.sleep (10)
-        print ("Publishing messages again...")
-        for i in range (1, 1001, 1):
-            publisher.publish (topic_name, bytes ("Message #{} - ".format (str (i)), 'utf-8'))
-        print ("Exiting thread " + self.name)
+        
+        #print ("Sleeping for another 10 secs...")
+        #time.sleep (10)
+        #print ("Publishing messages again...")
+        #for i in range (1, 1001, 1):
+        #    publisher.publish (topic_name, bytes ("Message #{} - ".format (str (i)), 'utf-8'))
+        #print ("Exiting thread " + self.name)
 
 def pubMsg ():
     thread1 = myThread (1, "Thread-1")
@@ -115,14 +116,14 @@ def getMsg ():
     subscriber = pubsub_v1.SubscriberClient ()
     subscription_path = subscriber.subscription_path (PROJECT, SUBSCRIPTION)
 
-    print ("Creating/opening file2 for append...")
+    print ("Creating/opening file for append...")
     completeName = os.path.join ("D:/", "output2.txt")
     global ofile
     ofile = open (completeName, "a+")
        
     def callback (message): # When a message is received it is processed and acknowledged here 
-        print('Received message: {}'.format (message))
-        writeToFile2 (message.data)
+        #print('Received message: {}'.format (message))
+        writeToFile2 (str (message.data) + " - " + message.message_id + " - " + str (message.publish_time) + " - " + str (message._received_timestamp) + "\n")
         message.ack ()
 
     future = subscriber.subscribe (subscription_path, callback=callback)
@@ -146,6 +147,7 @@ def writeToFile2 (line):
 # Starts here if executed as script
 if __name__ == '__main__':
     pubMsg () # Publish messages to a topic
+    time.sleep (5)
     getMsg () # Retrieve messages
     #runDF () # Run DataFlow and process the previously generated messages
 

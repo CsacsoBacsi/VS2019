@@ -389,7 +389,7 @@ class MyClass:
     i = 2 # Class variable, like static in C++
 
     @staticmethod
-    def f1 ():
+    def f1 (): # Neither self, nor cls is passed
         return 'Hello world (static)'
     def f2 (self): # Otherwise errors saying f2 is defined with no parameter however self is still passed to it!
         return 'Hello world'
@@ -400,7 +400,14 @@ class MyClass:
         #self.i = 3
 
     def f3 (self):
-        print ((self.num1 + self.num2) * MyClass.i) # Without MyClass i is not found. Weird.
+        print ((self.num1 + self.num2) * MyClass.i) # Without MyClass i is not found. Weird. Instance method: self is passed (pointer to particular instance)
+
+    @classmethod
+    def f4 (cls, p1, p2): # cls = Class
+        if (p1 >= 0 and p2 >= 0): # If btoh numbers are positive, create a new instance. MyClasss factory
+            inst = cls (p1, p2)
+        return inst
+
 
 inst1 = MyClass (0, 0)
 print (inst1.f1())
@@ -414,6 +421,9 @@ print (inst2.i) # 9
 print (MyClass.i) # 2
 inst2.k = 5 # Created k on the fly
 print (inst2.k) # 5
+
+inst3 = MyClass.f4 (5, 9) # f4 will instantiate the class
+print (inst3.num1, inst3.num2)
 
 # Inheritance
 print ("")
