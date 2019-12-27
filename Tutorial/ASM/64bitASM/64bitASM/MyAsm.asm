@@ -68,19 +68,21 @@ start:
 
 			; *** Mov/lea value, pointer, address ***
 			mov		rax, param1				; Both are the same though the opcode is different!
-			mov		rax, [param1]			; Loads 1 into RAX
+			mov		rax, [param1]			; Loads 1 into RAX. Everything is RIP relative. The instruction is much smaller this way!
+											; Does not use the full address of param1 just the "distance" of param1 from this mov instruction
 			lea		rax, param1				; Address of param1
 			lea		rax, [param1]			; Same, though the opcode is different!
-			mov     rax, label1				; This is the address of param1. Same as LEA
-			mov		qword ptr [rax], 11d	; RAX is a pointer, store 11 there. Param1 is now 11. Overwrites 8 bytes
-			mov		word ptr [rax], 22d	    ; Overwrites only 2 bytes
+			mov     rax, offset label1		; This is the address of param1. Same as LEA
+			mov		qword ptr [rax], 99999h	; RAX is a pointer, store 11 there. Param1 is now 11. Overwrites 8 bytes
+			mov		word ptr [rax], 12h		; Overwrites only 2 bytes
 			mov		rax, param1				; Check it!
 
 			mov		rbp, rsp				; Save RSP
 			; mov	rsp, rbp+10h			; Invalid use of register. LEA can do it
 			mov		rsp, [rbp+10h]			; RSP = value at address RBP + 10h
 			lea		rsp, [rbp+10h]			; RSP = RBP + 10h
-			lea		rsp, [rbp+rsi+10h]		; RSP = RBP + RSI + 10h
+			mov		rsi, 10h
+			lea		rsp, [rbp+rsi+10h]		; RSP = RBP + RSI (10h) + 10h
 			mov		rsp, rbp				; Restore RSP
 
 			; [label + offset], [reg, offset], [reg, reg], [reg, reg, scale] addressing modes. Offset can be a calculation such as (12 + 5) * 8
@@ -96,7 +98,6 @@ start:
 			mov rbx, 1
 			mov byte ptr [rax + rbx * 2], 10					; Scale Index Base (scale can be 1, 2, 4 or 8) Stores 10 in mylabel3
 			; Increment RBX and we can traverse an array in words (2 bytes)
-
 
 			; *** Embedded data ***
 			jmp		overd1
@@ -142,7 +143,7 @@ start:
 			mov		r9, 128d
 			imul	r9, r8
 
-			; Three  operands
+			; Three operands
 			imul	rax, [multiplier], 16d	; Store x*16 in rax
 
 			; Signed division
@@ -161,7 +162,7 @@ start:
 			neg		ax					; Complement all bits (1's complement) and add 1 to get a negative value
 										; First bit the sign bit. All the other bits must be summed and added to the value of the negative sign bit.
 										; So 1011: First bit is -8 (sign bit) + 3 = -5
-										; To get hte positive value, complement all bits 1011 -> 0100 and add 1 = 0101 = 5
+										; To get the positive value, complement all bits 1011 -> 0100 and add 1 = 0101 = 5
 			jl		negative1			; the result is negative
 			xor		rax, rax
 negative1:	neg		ax					; The result is positive (neg negative = positive)
@@ -281,27 +282,6 @@ positive1:	xor		rax, rax
 			stc								; Set Carry flag to 1
 			rcr		rax, 2					; Rotate through Carry
 			rcl		rax, 2
-
-			; *** Call a function with 6 parameters ***
-			mov		rbp, rsp				; Save current RSP before 16 byte alignment
-			and		rsp, -10h				; Least significant 4 bits are 0. FFFFFFFFFFFFFFF0
-
-			sub		rsp, 30h				; 2 qword parameters plus 4 qword shadow space for the function to save the 64 bit registers
-											; At least 32 bytes shadow space is always needed even if less than 4 parameters are passed
-
-			mov		rax, [param6]			; Last two parameters go to the stack
-			mov		qword ptr [rsp+28h], rax
-			mov		rax, param5
-			mov		qword ptr [rsp+20h], rax  
-			mov		r9, qword ptr param4	; Param4 - param1 in R9, R8, RDX and RCX
-			mov		r8, qword ptr param3
-			mov		rdx, qword ptr param2
-			mov		rcx, qword ptr param1
-
-			call	func6
-			mov		qword ptr [retval], rax	; Return value in RAX
-
-			mov		rsp, rbp				; Restore RSP as it was before the alignment
 
 			; *** Floating point binary representation ***
 			; Converting a binary represented float to decimal
@@ -719,6 +699,28 @@ positive1:	xor		rax, rax
 			mov ax, @Line
 			COPY rbx, rcx					; Call a macro. MASM copies macro body here
 	 
+	 		; *** Call a function with 6 parameters ***
+			mov		rbp, rsp				; Save current RSP before 16 byte alignment
+			and		rsp, -10h				; Least significant 4 bits are 0. FFFFFFFFFFFFFFF0
+
+			sub		rsp, 30h				; 2 qword parameters plus 4 qword shadow space for the function to save the 64 bit registers
+											; At least 32 bytes shadow space is always needed even if less than 4 parameters are passed
+
+			mov		rax, [param6]			; Last two parameters go to the stack
+			mov		qword ptr [rsp+28h], rax
+			mov		rax, param5
+			mov		qword ptr [rsp+20h], rax  
+			mov		r9, qword ptr param4	; Param4 - param1 in R9, R8, RDX and RCX
+			mov		r8, qword ptr param3
+			mov		rdx, qword ptr param2
+			mov		rcx, qword ptr param1
+
+			call	func6
+			mov		qword ptr [retval], rax	; Return value in RAX
+
+			mov		rsp, rbp				; Restore RSP as it was before the alignment
+
+			; Return from main ()
 			ret		0						; Return to the Operating System with exit code 0 in RAX
 	main endp
 
@@ -731,7 +733,7 @@ positive1:	xor		rax, rax
 
 			jmp		alternative
 
-			push	rbp						; Save the base pointer
+			push	rbp						; Save the base pointer. Both params and local variable access are via RBP
 			push	rdi  					; Save any of the non-volatile registers (RBX, RBP, RDI, RSI, RSP, R12, R13, R14, and R15) that may be used by the function
 			; mov	rbp, rsp				; It could also be done this way. Local vars under RBP, parameters above. See alternative
 			sub		rsp, 10h				; Allocate space for 2, 64 bit local variables
@@ -743,13 +745,13 @@ positive1:	xor		rax, rax
 			; Stack
 			; RBP + 50h -> param6			; Param6 and 5 passed via the stack
 			; RBP + 48h -> param5
-			; RBP + 40h -> R9 (param4)		; Param4 in R9
+			; RBP + 40h -> R9 (param4)		; Shadow space of 32 bytes (20h) for 4 registers. Param4 in R9
 			; RBP + 38h -> R8 (param3)		; Param3 in R8
 			; RBP + 30h -> RDX (param2)		; Param2 in RDX
 			; RBP + 28h -> RCX (param1)		; Param1 in RCX
 			; RBP + 20h -> Return address
 			; RBP + 18h -> RBP				; Saved RBP
-			; RBP + 10h -> RDI				; Saved RDI as non-volatile
+			; RBP + 10h -> RDI				; Saved RDI as deemed non-volatile
 			; RBP + 08h -> lvar2			; Local variables
 			; RBP + 00h -> lvar1
 
@@ -782,20 +784,20 @@ alternative:
 			; Stack
 			; RBP + 40h -> param6			; Param6 and 5 passed via the stack
 			; RBP + 38h -> param5
-			; RBP + 30h -> R9 (param4)		; Param4 in R9
+			; RBP + 30h -> R9 (param4)		; Shadow space of 32 bytes (20h) for 4 registers. Param4 in R9
 			; RBP + 28h -> R8 (param3)		; Param3 in R8
 			; RBP + 20h -> RDX (param2)		; Param2 in RDX
 			; RBP + 18h -> RCX (param1)		; Param1 in RCX
 			; RBP + 10h -> Return address
 			; RBP + 08h -> RBP				; Saved RBP
-			; RBP + 00h -> RDI				; Saved RDI as non-volatile
+			; RBP + 00h -> RDI				; Saved RDI as deemed non-volatile
 			; RSP + 08h -> lvar2			; Local variables
 			; RSP + 00h -> lvar1
 
 			; Parameters are RBP related, local variables RSP - that is the convention. Add the 6 parameters and the 2 local variables together
 			mov		rax, qword ptr [rbp+18h] ; Could be mov rax, rcx
 			mov		rcx, qword ptr [rbp+20h] ; Could be add rax, rdx
-			add		rax, rcx				 ; Should be non-existent
+			add		rax, rcx				 ; Could not be needed then
 			add		rax, qword ptr [rbp+28h] ; Could be mov rcx, r8
 			add		rax, qword ptr [rbp+30h] ; Could be mov rcx, r9
 			add		rax, qword ptr [rbp+38h] 
