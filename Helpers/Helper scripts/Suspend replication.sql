@@ -1,0 +1,1 @@
+EXEC pkg_replication_change.sp_suspend_replication (p_gname=>'CREDIT_CHECK_REPGRP') ;

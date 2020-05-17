@@ -1,0 +1,15 @@
+Sub RemoveCrLfs()
+
+Dim pobjCell As Range
+Dim plCharCounter As Long
+Dim psCellText As String
+
+For Each pobjCell In Selection
+psCellText = pobjCell.Text
+Do While InStr(psCellText, vbCr) > 0
+psCellText = Replace$(psCellText, vbCr, " ")
+Loop
+pobjCell.Value = psCellText
+Next
+
+End Sub

@@ -45,7 +45,7 @@ label1:
 											; Binary = 0.011. Move decimal point right 2x
 											; Exponent = bias (1023) - 2 = 1021
 											; Mantissa = Implicit first bit is always 1 - not stored
-											; then the number: 1000 Rest is all zeros
+											; then the number: 1000 Rest is all zeros. See more on this further below at the floating point representation section
 			f8_tiny		REAL8 0.001f		; 3f50624dd2f1a9fc3fd8
 
 .data?										; Uninitialized data section

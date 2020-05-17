@@ -1,0 +1,21 @@
+1NF: Table should have atomic (single valued) attributes, columns. E.g. employee id 10 can not have 2 phone numbers on the same row
+2NF: It is in 1NF and there is no partial dependency of non-prime attributes. Attributes which are not part of candidate keys. There is no such attribute that only dependent on part of the primary key. E.g. score id, student id and subject id and teacher name and mark. Teacher name is dependent upon subject but not student id. We can split the table into two: student and subject table
+3NF: It is in 2NF and there is no transitive dependency. A non-prime attribute depends on another non-prime attribute. Add exam name and total marks. Exam name depends on student and subject but total score depends on exam name. Indirect dependency! The solution is to create an exam table.
+BCNF: A 3NF table which does not have multiple overlapping candidate keys is said to be in BCNF
+
+2NF:
+Student1, Subject1, Teacher1, Teacher name 1
+Student2, Subject1, Teacher1, Teacher name 1
+Student1, Subject2, Teacher2, Teacher name 2
+
+Candidate key: (Student, Subject)
+Subject -> Teacher (partial dependency, not dependent upon Student)
+
+
+3NF:
+Student1, Subject1, Teacher1, Exam1, Total mark
+Student2, Subject1, Teacher1, Exam1, Total mark
+Student1, Subject2, Teacher2, Exam2, Total mark
+
+Candidate key: (Student, Subject)
+Student, Subject -> Exam -> Total mark (transitive dependency, Total mark is dependent on Exam and Exam on Student and Subject)

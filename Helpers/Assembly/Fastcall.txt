@@ -1,0 +1,112 @@
+; int retval = func6 (p1, p2, p3, p4, p5, p6);
+mov eax,dword ptr [p6]  rbp + 028h 
+mov dword ptr [rsp+28h],eax  rbp - rsp = 040h
+mov eax,dword ptr [p5]  rbp + 020h
+mov dword ptr [rsp+20h],eax  
+mov r9d,dword ptr [p4]  rbp + 018h
+mov r8d,dword ptr [p3]  rbp + 010h
+mov edx,dword ptr [p2]  rbp + 08h
+mov ecx,dword ptr [p1]  rbp + 00h
+call func6  
+mov dword ptr [retval],eax
+
+mov dword ptr [rsp+20h],r9d  
+mov dword ptr [rsp+18h],r8d  
+mov dword ptr [rsp+10h],edx  
+mov dword ptr [rsp+8],ecx  
+push rbp  
+push rdi  
+sub rsp,108h  
+mov rbp,rsp  
+mov rdi,rsp  
+mov ecx,42h  
+mov eax,0CCCCCCCCh  
+rep stos dword ptr [rdi]  
+mov ecx,dword ptr [rsp+128h]
+
+; int lv1 = 10, lv2 = 20;
+mov dword ptr [lv1],0Ah  rbp + 00h
+mov dword ptr [lv2],14h  rbp + 020h
+
+mov eax,dword ptr [rp2]  rbp + 0128h
+mov ecx,dword ptr [rp1]  rbp + 0120h
+add ecx,eax  
+mov eax,ecx  
+add eax,dword ptr [rp3]  rbp + 0130h
+add eax,dword ptr [rp4]  rbp + 0138h
+add eax,dword ptr [rp5]  rbp + 0140h
+add eax,dword ptr [rp6]  rbp + 0148h
+add eax,dword ptr [lv1]  rbp + 00h
+add eax,dword ptr [lv2]  rbp + 020h
+
+lea rsp,[rbp+108h]  
+pop rdi  
+pop rbp  
+ret
+
+; ***** Program *****
+.data
+param1 dq 1000d
+param2 dq 2000d
+param3 dq 3000d
+param4 dq 5000d
+param5 dq 6000d
+param6 dq 7000d
+
+.code
+mov rax, rsp			; Save RSP before 16 byte alignment
+push rax
+and rsp, -10h			; Least significant 4 bits are 0. FFFFFFFFFFFFFFF0
+add rsp, 10h			; We may have lost up to 15 bytes on the stack containing valueable data
+
+sub rsp, 0x30h			; 2 qword parameters plus 4 qword shadow space for the function to save the 64 bit registers
+
+lea rax, param6			; Last twqo parameters go to the stack
+mov qword ptr [rsp+28h], rax
+lea rax, param5
+mov qword ptr [rsp+20h], rax  
+lea r9, qword ptr param4	; Param4 - param1 in R9, R8, RDX and RCX
+lea r8, qword ptr param3
+lea rdx, qword ptr param2
+lea rcx, qword ptr param1
+
+call func6  
+mov qword ptr [retval], rax	; Return value in RAX
+
+ret
+
+; Function code
+proc func6 proc
+
+mov qword ptr [rsp+20h], r9  
+mov qword ptr [rsp+18h], r8  
+mov qword ptr [rsp+10h], rdx  
+mov qword ptr [rsp+8], rcx  	; Because the 8 byte return address is already on the stack
+
+push rbp  			; Save the base pointer
+push rdi  			; Save any of the non-volatile registers (RBX, RBP, RDI, RSI, RSP, R12, R13, R14, and R15) that may be used by the function
+sub rsp, 10h  
+mov rbp, rsp  
+
+mov qword ptr [rbp+08h], 10000d ; Local variables on the stack
+mov dword ptr [rbp], 8000d
+
+; RBP -> lvar1, lvar2, RDI, RBP, RET address, RCX (param1), RDX (param2), R8 (param3), R9 (param4), param5, param6
+; RBP  + 0      08h    10h  18h  20h          28h           30h           38h          40h          48h     50h
+mov rax, qword ptr [rbp+28h]	; Add the 6 parameters and the 2 local variables together
+mov rcx, qword ptr [rbp+30h]
+add rax, rcx  
+add rax, qword ptr [rbp+38h]
+add rax, qword ptr [rbp+40h]
+add rax, qword ptr [rbp+48h]
+add rax, qword ptr [rbp+50h]
+add rax, qword ptr [rbp+08h]
+add rax, qword ptr [rbp]
+
+mov rsp, rbp+10			; Discard local variables
+pop rdi  
+pop rbp  
+ret
+end proc
+
+

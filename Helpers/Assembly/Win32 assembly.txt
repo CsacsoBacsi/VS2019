@@ -1,0 +1,150 @@
+586 ; 586 instruction set
+.MODEL Flat, STDCALL ; Under Win32 there is only FLAT. STDCALL: last param pushed to stack first, call function then caller balances the stack afterwards add sp 12 (3 params)
+
+option casemap:none ; preserves the case of identifiers in PUBLIC, COMM, EXTERNDEF, EXTERN, PROTO, and PROC declarations.
+
+include \masm32\include\windows.inc ; Include file with function prototypes
+include \masm32\include\kernel32.inc
+include \masm32\include\user32.inc
+includelib \masm32\lib\kernel32.lib ; Import library for the linker
+includelib \masm32\lib\user32.lib 
+
+MessageBox PROTO hwnd:DWORD, lpText:DWORD, lpCaption:DWORD, uType:DWORD ; MessageBox prototype (incluse file has it)
+WinMain proto :DWORD,:DWORD,:DWORD,:DWORD ; Another proto
+
+POINT STRUCT ; Structures
+    x   dd ?
+    y   dd ?
+POINT ENDS
+
+.DATA ; Initialized data section
+
+MsgBoxCaption  db "yohaay, my message box!",0
+MsgBoxText     db "Win32 Assembly is Great!",0
+
+WPARAM TYPEDEF PTR WORD ; Type declaration. Primarily for pointers
+char    TYPEDEF SBYTE ; For integer types also
+long    TYPEDEF DWORD
+float   TYPEDEF REAL4
+double  TYPEDEF REAL8
+
+char WPARAM 20h
+OutputString db OUTPUTSIZE dup(0) ; Fill it up with zeros
+CrLf db 0Dh,0Ah,0 ; Carriage return + line feed
+FilterString db "All Files",0,"*.*",0 
+
+; Data types
+db      0x55                ; just the byte 0x55
+db      0x55,0x56,0x57      ; three bytes in succession
+db      'a',0x55            ; character constants are OK
+db      'hello',13,10,'$'   ; so are string constants
+dw      0x1234              ; 0x34 0x12
+dw      'a'                 ; 0x41 0x00 (it's just a number)
+dw      'ab'                ; 0x41 0x42 (character constant)
+dw      'abc'               ; 0x41 0x42 0x43 0x00 (string)
+dd      0x12345678          ; 0x78 0x56 0x34 0x12
+dq      0x1122334455667788  ; 0x88 0x77 0x66 0x55 0x44 0x33 0x22 0x11
+dt      ; defines ten bytes
+
+BYTE, DB (byte) Allocates unsigned numbers from 0 to 255.
+SBYTE (signed byte) Allocates signed numbers from –128 to +127.
+WORD, DW (word = 2 bytes) Allocates unsigned numbers from 0 to 65,535 (64K).
+SWORD (signed word) Allocates signed numbers from –32,768 to +32,767. 
+DWORD, DD (doubleword = 4 bytes), Allocates unsigned numbers from 0 to 4,294,967,295 (4 megabytes).
+SDWORD (signed doubleword) Allocates signed numbers from –2,147,483,648 to +2,147,483,647.
+FWORD, DF (farword = 6 bytes) Allocates 6-byte (48-bit) integers. These values are normally used only as pointer variables on the 80386/486 processors.
+QWORD, DQ (quadword = 8 bytes) Allocates 8-byte integers used with 8087-family coprocessor instructions. 
+TBYTE, DT (10 bytes), Allocates 10-byte (80-bit) integers if the initializer has a radix specifying the base of the number.
+
+array   DWORD   10 DUP (1)                    ; 10 doublewords
+                                              ; initialized to 1
+buffer  BYTE    256 DUP (?)                   ; 256-byte buffer
+masks   BYTE    20 DUP (040h, 020h, 04h, 02h) ; 80-byte buffer
+                                              ;   with bit masks
+three_d DWORD   5 DUP (5 DUP (5 DUP (0)))     ; 125 doublewords
+                                              ;   initialized to 0
+
+array[9] ; References the last element as it starts at zero. array+9*4 is probably the same
+
+array   WORD    40 DUP (5)
+larray  EQU     LENGTHOF array    ; 40 elements
+sarray  EQU     SIZEOF   array    ; 80 bytes
+tarray  EQU     TYPE     array    ;  2 bytes per element
+
+.DATA? ; Uninitialized data section. Allocates memory only, does not make EXE size bigger
+
+hInstance HINSTANCE ? 
+hitpoint POINT <>
+buffer db 512 dup(?) ; Reserve 512 bytes
+
+.CONST ; Constants
+
+IDM_TEST equ 1 ; Menu IDs
+IDM_HELLO equ 2
+
+IFDEF   buffer ; Conditional compilation. evaluated at assembly time. buffer must be known at this point
+buff    BYTE    buffer DUP(?)
+ENDIF
+
+.CODE ; Code section
+<label> ; Must be between the same lable
+start:
+
+mov hInstance, eax ; Global variable having a value assigned to it
+
+mov     bx, 0C3EEh ; Sign bit of bl is now 1: BH == 1100 0011, BL == 1110 1110
+movsx   ebx, bx ; Load signed 16-bit value into 32-bit register and sign-extend
+                ; EBX is now equal FFFFC3EEh
+movzx   dx, bl ; Load unsigned 8-bit value into 16-bit register and zero-extend
+               ; DX is now equal 00EEh
+
+invoke MessageBox, NULL, addr MsgBoxText, addr MsgBoxCaption, MB_OK ; Use invoke. addr can not forward reference. MsgBoxCaption must be forward declared. Offset can.
+; addr can handle local variable as well as global ones, offset can not. Equivalent: lea eax, LocalVar ; push eax then call something. mov eax, ebp+2 is invalid. LEA is fine!
+; Both offset and addr return the address of the variable (pointer)
+
+lea si, Msg        ; Four byte instruction
+mov si, OFFSET Msg ; Three byte equivalent (faster)
+
+invoke ExitProcess, NULL 
+; A Win32 function preserves the segment registers and ebx, edi, esi, ebp. Conversely, ecx and edx are not. eax not either
+
+ASSUME  bx:PTR WORD ; Assume BX is now a word pointer
+inc     [bx] ; Increment word pointed to by BX
+add     bx, 2 ; Point to next word
+mov     [bx], 0 ; Word pointed to by BX = 0
+ASSUME  bx:NOTHING
+
+; Without ASSUME, we need
+inc WORD PTR [bx]
+mov WORD PTR [bx], 0
+
+MyProc PROC DWORD ; Function
+
+LOCAL var1:WORD ; Allocates space on the stack
+LOCAL var2:WORD ; Cann ot initialize them
+
+.WHILE TRUE ; While-loop until true
+  invoke GetMessage, ADDR msg,NULL,0,0
+  .BREAK .IF (!eax)
+  invoke TranslateMessage, ADDR msg
+  invoke DispatchMessage, ADDR msg
+.ENDW
+
+.IF uMsg==WM_DESTROY ; Conditional
+  invoke PostQuitMessage,NULL
+.ELSE
+  invoke DefWindowProc,hWnd,uMsg,wParam,lParam
+  ret
+.ENDIF 
+
+mov hitpoint.x, bcx ; Addressing the struct member
+
+
+MyProc endp ; End of my procedure
+
+end <label> ; End of program (code)
+end start
+
+
+
+

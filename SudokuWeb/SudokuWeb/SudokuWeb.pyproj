@@ -6,6 +6,8 @@
     <RootNamespace>SudokuWeb</RootNamespace>
     <WebBrowserPort>9000</WebBrowserPort>
     <UseIISExpress>false</UseIISExpress>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>

@@ -1,0 +1,207 @@
+
+Stack frame:
+
+void my_func (long par 1, long par2)
+{
+   long x;
+   ...some more code
+}
+ 
+Assembly:
+ 
+ push par2           ;ebp+12 ; First param
+ push par1           ;ebp+8 ; Second param
+ call my_func        ;ebp+4=old eip ; Parameters to a function are above the stack frame
+ 
+ push ebp            ;ebp+0=old ebp ; Save base pointer
+ mov ebp, esp        ;stack frame
+ sub esp, 4          ;this is x or ebp-4 ; Local variables in a function are below the stack frame
+ ...some code
+ 
+ add esp, 4          ;unallocate x ; Destroy local variables. Probably not needed if mov esp, ebp
+ mov esp, ebp        ;destroy stack frame
+ pop ebp
+ ret 8               ;fix stack from par1+par2 or 8 bytes ; Callee clears parameters
+
+******************************
+C calling convention (__cdecl)
+******************************
+
+This convention is the default for C/C++ programs (compiler option /Gd). If a project is set to use some other calling convention, we can still declare a function to use __cdecl: 
+int __cdecl sumExample (int a, int b);
+
+The main characteristics of __cdecl calling convention are:
+1.Arguments are passed from right to left, and placed on the stack. 
+2.Stack cleanup is performed by the caller. 
+3.Function name is decorated by prefixing it with an underscore character '_' . 
+
+; // push arguments to the stack, from right to left
+push        3    
+push        2    
+; // call the function
+call        _sumExample 
+; // cleanup the stack by adding the size of the arguments to ESP register
+add         esp,8 
+; // copy the return value from EAX to a local variable (int c)
+mov         dword ptr [c],eax
+
+The called function is shown below:
+; // function prolog
+  push        ebp  
+  mov         ebp,esp 
+  sub         esp,0C0h 
+  push        ebx  
+  push        esi  
+  push        edi  
+  lea         edi,[ebp-0C0h] 
+  mov         ecx,30h 
+  mov         eax,0CCCCCCCCh 
+  rep stos    dword ptr [edi] 
+; //    return a + b;
+  mov         eax,dword ptr [a] 
+  add         eax,dword ptr [b] 
+; // function epilog
+  pop         edi  
+  pop         esi  
+  pop         ebx  
+  mov         esp,ebp 
+  pop         ebp  
+  ret
+
+***************************************
+Standard calling convention (__stdcall)
+***************************************
+
+This convention is usually used to call Win32 API functions. In fact, WINAPI is nothing but another name for __stdcall:
+#define WINAPI __stdcall
+
+We can explicitly declare a function to use the __stdcall convention:
+int __stdcall sumExample (int a, int b);
+
+Also, we can use the compiler option /Gz to specify __stdcall for all functions not explicitly declared with some other calling convention.
+The main characteristics of __stdcall calling convention are:
+1.Arguments are passed from right to left, and placed on the stack. 
+2.Stack cleanup is performed by the called function. 
+3.Function name is decorated by prepending an underscore character and appending a '@' character and the number of bytes of stack space required. 
+
+The example follows:
+; // push arguments to the stack, from right to left
+  push        3    
+  push        2    
+; // call the function
+  call        _sumExample@8
+; // copy the return value from EAX to a local variable (int c)  
+  mov         dword ptr [c],eax
+
+The function code is shown below:
+; // function prolog goes here (the same code as in the __cdecl example)
+; //    return a + b;
+  mov         eax,dword ptr [a] 
+  add         eax,dword ptr [b] 
+; // function epilog goes here (the same code as in the __cdecl example)
+; // cleanup the stack and return
+  ret         8
+
+Because the stack is cleaned by the called function, the __stdcall calling convention creates smaller executables than __cdecl, in which the code for stack cleanup must be generated for each function call. On the other hand, functions with the variable number of arguments (like printf()) must use __cdecl, because only the caller knows the number of arguments in each function call; therefore only the caller can perform the stack cleanup.
+
+************************************
+Fast calling convention (__fastcall)
+************************************
+
+Fast calling convention indicates that the arguments should be placed in registers, rather than on the stack, whenever possible. This reduces the cost of a function call, because operations with registers are faster than with the stack.
+We can explicitly declare a function to use the __fastcall convention as shown:
+int __fastcall sumExample (int a, int b);
+
+We can also use the compiler option /Gr to specify __fastcall for all functions not explicitly declared with some other calling convention.
+The main characteristics of __fastcall calling convention are:
+1.The first two function arguments that require 32 bits or less are placed into registers ECX and EDX. The rest of them are pushed on the stack from right to left. 
+2.Arguments are popped from the stack by the called function. 
+3.Function name is decorated by by prepending a '@' character and appending a '@' and the number of bytes (decimal) of space required by the arguments. 
+
+Note: Microsoft have reserved the right to change the registers for passing the arguments in future compiler versions.
+
+Here goes an example:
+; // put the arguments in the registers EDX and ECX
+  mov         edx,3 
+  mov         ecx,2 
+; // call the function
+  call        @fastcallSum@8
+; // copy the return value from EAX to a local variable (int c)  
+  mov         dword ptr [c],eax
+
+Function code:
+; // function prolog
+  push        ebp  
+  mov         ebp,esp 
+  sub         esp,0D8h 
+  push        ebx  
+  push        esi  
+  push        edi  
+  push        ecx  
+  lea         edi,[ebp-0D8h] 
+  mov         ecx,36h 
+  mov         eax,0CCCCCCCCh 
+  rep stos    dword ptr [edi] 
+  pop         ecx  
+  mov         dword ptr [ebp-14h],edx 
+  mov         dword ptr [ebp-8],ecx 
+; // return a + b;
+  mov         eax,dword ptr [a] 
+  add         eax,dword ptr [b] 
+;// function epilog  
+  pop         edi  
+  pop         esi  
+  pop         ebx  
+  mov         esp,ebp 
+  pop         ebp  
+  ret
+
+How fast is this calling convention, comparing to __cdecl and __stdcall? Find out for yourselves. Set the compiler option /Gr, and compare the execution time. I didn't find __fastcall to be any faster than other calling conventons, but you may come to different conclusions.
+
+********
+Thiscall
+********
+
+Thiscall is the default calling convention for calling member functions of C++ classes (except for those with a variable number of arguments).
+
+The main characteristics of thiscall calling convention are:
+1.Arguments are passed from right to left, and placed on the stack. this is placed in ECX. 
+2.Stack cleanup is performed by the called function. 
+
+The example for this calling convention had to be a little different. First, the code is compiled as C++, and not C. Second, we have a struct with a member function, instead of a global function.
+struct CSum
+{
+    int sum ( int a, int b) {return a+b;}
+};
+
+The assembly code for the function call looks like this:
+push        3
+push        2
+lea         ecx,[sumObj]
+call        ?sum@CSum@@QAEHHH@Z            ; CSum::sum
+mov         dword ptr [s4],eax
+
+The function itself is given below:
+push        ebp
+mov         ebp,esp
+sub         esp,0CCh
+push        ebx
+push        esi
+push        edi
+push        ecx
+lea         edi,[ebp-0CCh]
+mov         ecx,33h
+mov         eax,0CCCCCCCCh
+rep stos    dword ptr [edi]
+pop         ecx
+mov         dword ptr [ebp-8],ecx
+mov         eax,dword ptr [a]
+add         eax,dword ptr [b]
+pop         edi
+pop         esi
+pop         ebx
+mov         esp,ebp
+pop         ebp
+ret         8
+
+Now, what happens if we have a member function with a variable number of arguments? In that case, __cdecl is used, and this is pushed onto the stack last.

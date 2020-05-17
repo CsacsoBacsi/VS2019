@@ -5,7 +5,7 @@
     <ProjectGuid>2f70e650-d043-4fa8-9f32-1dcc660b2181</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>PythonTutorial.py</StartupFile>
+    <StartupFile>General-Python.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,8 +22,104 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Arguments.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Date-time.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decorators.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dictionaries.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dictionary-comprehension.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Files.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="General-Python.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterables-generators.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="JSON.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Lambda-map-filter-reduce.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="List-comprehension.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Lists-tuples.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Local-global.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Message-box.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Mymath.py" />
-    <Compile Include="PythonTutorial.py" />
+    <Compile Include="Mypack\a.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mypack\b.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mypack\sub1\a.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mypack\sub1\b.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mypack\sub1\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mypack\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Oracle.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packages-modules.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Printing.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Recursion.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sets.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shallow-deep-copy.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Threading.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="XML.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zip.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mypack\" />
+    <Folder Include="Mypack\sub1\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
