@@ -5,7 +5,7 @@
     <ProjectGuid>2f70e650-d043-4fa8-9f32-1dcc660b2181</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Unittest.py</StartupFile>
+    <StartupFile>Properties.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -58,6 +58,9 @@
     <Compile Include="General-Python.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Internal-attributes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Iterables-generators.py">
       <SubType>Code</SubType>
     </Compile>
@@ -77,6 +80,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Message-box.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Type-class.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mymath.py" />
