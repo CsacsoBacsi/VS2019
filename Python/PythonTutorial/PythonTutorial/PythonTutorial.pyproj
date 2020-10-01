@@ -5,7 +5,7 @@
     <ProjectGuid>2f70e650-d043-4fa8-9f32-1dcc660b2181</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Properties.py</StartupFile>
+    <StartupFile>RegExp.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -83,6 +83,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegExp.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Type-class.py">

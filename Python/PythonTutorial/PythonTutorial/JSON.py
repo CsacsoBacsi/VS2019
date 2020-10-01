@@ -16,14 +16,14 @@ print (blackjack_hand == tuple (decoded_hand)) # True
 print (decoded_hand)
 print (encoded_hand)
 
+# --------------------------------------------------------------------
+
 json_data1 = {
     "president": {
         "name": "George Bush",
         "species": "Human"
     }
 }
-
-# --------------------------------------------------------------------
 
 with open ("president.json", "w") as write_file: # with means that the unmanaged resource gets closed, garbage collected when goes out of scope
     json.dump (json_data1, write_file, indent = 4, separators = (',', ': '))

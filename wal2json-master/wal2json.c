@@ -10,7 +10,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "server/postgres.h"
 
 #include "access/genam.h"
 #include "access/heapam.h"
