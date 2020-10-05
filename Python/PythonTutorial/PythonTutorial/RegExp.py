@@ -1,5 +1,8 @@
 # --------------------------------------------------------------------
 
+import re
+import os
+
 # *** Matching chars ***
 """ MetaCharacters: . ^ $ * + ? { } [ ] \ | ( )
 Class [] or set of characters
@@ -17,7 +20,14 @@ Class [] or set of characters
 
 Can be combined with classes: [\s,abc]
 . matches any char except newline. re.DOTALL matches newline as well
+
 """
+p = re.compile ('a[\S]*')
+print ('a[\S]', p.search ('abcbd n')) # Matches till d. After d there is a space char
+p = re.compile ('a[\D]*') # Non-decimal digits
+print ('a[\S]', p.search ('abc5bd1n')) # Matches till c
+p = re.compile ('a[^0-9]*') # Non-decimal digits
+print ('a[\S]', p.search ('abc5bd1n')) # Matches till c. ^ in a set it means complement
 
 # *** Repeating things ***
 """
@@ -30,8 +40,7 @@ a[bcd]*b tries to match 'abcbd'
 It goes till the end because the letter 'd' matches [bcd*] but then it fails because regexp part 3 'b' does not match the string as the string is finished
 So it back tracks. 'd' does not match 'b' so it back tracks again. Finally the regexp 'b' (last bit of the regexp) matches 'b'
 """
-import re
-import os
+
 p = re.compile ('a[bcd]*b')
 print (p.match ('abcbd')) # If matches from the beginning
 print (p.match ('abcbd'))
