@@ -1,0 +1,6 @@
+create table udm.claims as (
+   id varchar (20), id2 varchar (10), id3 varchar,
+   vol integer,
+   desc varchar,
+   last_col varchar (50)
+) ;

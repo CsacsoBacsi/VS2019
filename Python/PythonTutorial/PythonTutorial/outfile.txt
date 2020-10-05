@@ -1,0 +1,5 @@
+create table ProjectNameclaims as (
+   id string, id2 string, id3 string,
+   vol int64
+   desc string,
+   last_col string,) ;
