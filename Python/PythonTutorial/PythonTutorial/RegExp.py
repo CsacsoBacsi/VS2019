@@ -44,7 +44,7 @@ So it back tracks. 'd' does not match 'b' so it back tracks again. Finally the r
 p = re.compile ('a[bcd]*b')
 print (p.match ('abcbd')) # If matches from the beginning
 print (p.match ('abcbd'))
-# matches 'abcb'. Span: [0-4] 
+# matches 'abcb'. Span: [0-4]  
 
 '''
 + matches previous char 1 or more times
