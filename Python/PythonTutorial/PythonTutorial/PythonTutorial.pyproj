@@ -5,7 +5,7 @@
     <ProjectGuid>2f70e650-d043-4fa8-9f32-1dcc660b2181</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>RegExp.py</StartupFile>
+    <StartupFile>General-Python.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

@@ -6,7 +6,7 @@ import sys
 # --------------------------------------------------------------------
 
 print ("Hello, World!") # First ever Python program/command
-print (sys.argv[0], len (sys.argv)) # Length of argv as it is a list
+print (sys.argv[0], sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], len (sys.argv)) # Length of argv as it is a list
 
 # --------------------------------------------------------------------
 
@@ -160,18 +160,18 @@ print (type (x)) # Check type
 # --------------------------------------------------------------------
 
 # All and any
-all ([1, 2, 3, 4]) # has to test to the end!
+print (all ([1, 2, 3, 4])) # has to test to the end!
 # True
-all ([0, 1, 2, 3, 4]) # 0 is False in a boolean context!
+print (all ([0, 1, 2, 3, 4])) # 0 is False in a boolean context!
 # False ^--stops here!
-all ([])
+print (all ([]))
 # True gets to end, so True!
 
-any ([0, 0.0, '', (), [], {}]) # has to test to the end!
+print (any ([0, 0.0, '', (), [], {}])) # has to test to the end!
 # False
-any ([1, 0, 0.0, '', (), [], {}])  # 1 is True in a boolean context!
+print (any ([1, 0, 0.0, '', (), [], {}]))  # 1 is True in a boolean context!
 # True  ^--stops here!
-any ([])
+print (any ([]))
 # False gets to end, so False!
 
 # --------------------------------------------------------------------
