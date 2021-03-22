@@ -5,6 +5,8 @@ etc. When you see something like a.b.c, it is referring to the attribute c of at
 could be any of the types mentioned above
 '''
 
+import os
+
 # --------------------------------------------------------------------
 
 class Foo:
@@ -13,13 +15,13 @@ class Foo:
 
         self.number = 1
         self.module = os
-        self.class_ = Exception
+        self.class_ = Exception # Underscore to avoid clash with the class keyword
         self.function = dir
 
 f = Foo()
 
-f.module.path.join ('foo', 'bar')
-raise f.class_ ('foo')
+joined = f.module.path.join ('foo', 'bar')
+#raise f.class_ ('foo')
 f.function('.')
 
 print (callable(f.module))
@@ -36,3 +38,5 @@ def f (x: float) -> int: # Parameter annotation in function. Does not have to be
 print (f.__annotations__['x'])
 
 # --------------------------------------------------------------------
+
+os.system ("pause")
