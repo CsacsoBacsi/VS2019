@@ -1,0 +1,10 @@
+api_url = 'https://aventri.com/v2/ereg/listEvents/?accesstoken=a547f5deA32CA8013Ab849faB90&lastmodified-gt=2022-02-15&limit=1' # First param
+api_url2 = 'https://aventri.com/v2/ereg/listEvents/?lastmodified-gt=2022-02-15&limit=1&accesstoken=a547f5deA32CA8013Ab849faB90&offset=100' # Middle param
+api_url3 = 'https://aventri.com/v2/ereg/listEvents/?accesstoken=a547f5deA32CA8013Ab849faB90' # Only param
+api_url4 = 'https://aventri.com/v2/ereg/listEvents/?lastmodified-gt=2022-02-15&limit=1&accesstoken=a547f5deA32CA8013Ab849faB90' # Last param
+
+s = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at*", api_url, count=1).replace ("*at*", "accesstoken=***Access token***")
+s2 = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at*", api_url2, count=1).replace ("*at*", "accesstoken=***Access token***")
+s3 = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at**", api_url3, count=1).replace ("*at*", "accesstoken=***Access token***")
+s4 = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at*", api_url4, count=1).replace ("*at*", "accesstoken=***Access token***")
+print (s)
