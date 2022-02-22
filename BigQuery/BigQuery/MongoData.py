@@ -129,7 +129,7 @@ persons = [
     "name": "Baby",
     "dims": {
         "width": 20,
-        "length": 30,
+        "length": 35,
         "height": 55
     },
     "age": 3
@@ -314,3 +314,27 @@ stackof = [
        ]
 }]
 
+arr = [
+{
+    "id": 0,
+    "name": "Lucas",
+    "scores": [15, 4, 9, 20, 2]
+},
+{
+    "id": 1,
+    "name": "Ben",
+    "scores": [11, 6, 19, 7, 1]
+}]
+
+students = [
+    { "id" : 1, "grades" : [ 95, 92, 90, 92 ], "mean": 93 },
+    { "id" : 2, "grades" : [ 98, 100, 102, 95 ], "mean": 100  },
+    { "id" : 3, "grades" : [ 95, 110, 100, 92 ], "mean": 103  }
+]
+students2 = [{ "id" : 1, "grades" : [ { "grade": 85, "mean": 93 },
+                                      { "grade": 95, "mean": 100  },
+                                      { "grade": 110, "mean": 103  } ] },
+             { "id" : 2, "grades" : [ { "grade": 65, "mean": 70 },
+                                      { "grade": 90, "mean": 195  },
+                                      { "grade": 100, "mean": 98  } ]
+}]

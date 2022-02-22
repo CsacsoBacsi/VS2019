@@ -126,5 +126,56 @@ for i in range (1, 82, 1):
         print ("Cell: ", str (i), "Value: ", str (gridArea [i]))
 
 # --------------------------------------------------------------------
+import dpath.util
+
+x = {
+"a": {
+    "b": {
+    "3": 2,
+    "43": 30,
+    "c": [],
+    "d": ['red', 'buggy', 'bumpers'],
+    }
+}
+}
+x2 = {
+"a": {
+    "b": {
+    "3": 2,
+    "43": 30,
+    "c": [],
+    "d": ['red', 'buggy', 'bumpers'],
+    }
+}
+}
+result = dpath.util.search(x, "a/b/[cd]")
+data = json.dumps (result, indent=4, sort_keys=True)
+print (result)
+print (result['a']['b'])
+result = dpath.util.search(x, "a/b/[cd]")
+print (json.dumps (result, indent=4, sort_keys=True))
+
+res= dpath.util.set(x, 'a/b/[cd]', 'Waffles')
+print (json.dumps (x, indent=4, sort_keys=True))
+
+dpath.util.new(x, 'a/b/e/f/g', "Roffle")
+print (json.dumps (x, indent=4, sort_keys=True))
+
+dpath.util.new(x, 'a/b/e/f/h', [])
+dpath.util.new(x, 'a/b/e/f/h/5', 'Wow!')
+print (json.dumps (x, indent=4, sort_keys=True))
+
+def filter (x):
+    if "ffle" in str(x):
+            return True
+    return False
+
+result = dpath.util.search(x, '**', afilter=filter)
+print (json.dumps (result, indent=4, sort_keys=True))
+
+res = dpath.util.values(x2, 'a.b.d.*', separator='.')
+print (json.dumps (res, indent=4, sort_keys=True))
+
+# --------------------------------------------------------------------
 
 os.system ("pause")

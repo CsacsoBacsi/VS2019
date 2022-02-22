@@ -5,7 +5,7 @@
     <ProjectGuid>eec3a63b-dc85-4f91-afab-15182f76752f</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>BigQuery_fromJSON.py</StartupFile>
+    <StartupFile>Mongo.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -35,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CloudSQL.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataFlow_BQ_test.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Firestore.py">

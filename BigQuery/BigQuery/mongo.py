@@ -5,7 +5,8 @@ import os
 import sys
 import pymongo
 from pymongo import InsertOne, DeleteOne, ReplaceOne
-from MongoData import customers, orders, mylist, mylist2, tutorial1, tutorial2, tutorial3, tutorial4, tutorial5, tutorial6, persons, org1, employee1, employee2, stackof
+from MongoData import customers, orders, mylist, mylist2, tutorial1, tutorial2, tutorial3, tutorial4, tutorial5, \
+                      tutorial6, persons, org1, employee1, employee2, stackof, arr, students, students2
 from pprint import pprint
 import json
 
@@ -22,15 +23,15 @@ col_tutorial = db.tutorial # Collection definition. Delayed -> has to have docum
 
 # Delete many documents
 print ('--- Delete collections ---')
-result = db.col_tutorial.delete_many ({'author': "Alex"})
+result = col_tutorial.delete_many ({'author': "Alex"})
 print (result.deleted_count)
-result = db.col_tutorial.delete_many ({'author': "David"})
+result = col_tutorial.delete_many ({'author': "David"})
 print (result.deleted_count)
-result = db.col_tutorial.delete_many ({'author': "Lucas"})
+result = col_tutorial.delete_many ({'author': "Lucas"})
 print (result.deleted_count)
-result = db.col_tutorial.delete_many ({'author': None})
+result = col_tutorial.delete_many ({'author': None})
 print (result.deleted_count)
-result = db.col_tutorial.delete_many ({}) # Delete all documents
+result = col_tutorial.delete_many ({}) # Delete all documents
 print (result.deleted_count)
 
 mycol = db ["customers"] # Creates new collection. Does not exist until populated 
@@ -244,6 +245,19 @@ result = qtest.update_many (myquery, newvalues)
 for doc in qtest.find():
   print (doc)
 print ('--------')
+
+# Rename fields
+result = qtest.update_many ({"id": 1}, {"$rename": {"age": "aged", "name": "named"}})
+for doc in qtest.find():
+  print (doc)
+print ('--------')
+
+# Max, min
+result = qtest.update_many ({"id": 1}, {"$max": {"aged": 60}}) # Updates age to 60 if current value is less than that
+for doc in qtest.find():
+  print (doc)
+print ('--------')
+result = qtest.update_many ({"id": 1}, {"$rename": {"aged": "age", "named": "name"}}) # Restore field names
 
 # --------------------------------------------------------------------
 
@@ -530,6 +544,154 @@ docs = col_imp.aggregate([{'$unwind': '$impressions'},
 
 for doc in docs:
     print (doc)
+
+# --------------------------------------------------------------------
+
+# *** Array operations ***
+# Push, pop, pull, each
+col_arr = db.arrays
+col_arr.delete_many({})
+
+col_arr.insert_many (arr)
+
+print ('--- Array ops ---')
+col_arr.update_many(
+   { "id": 1 },
+   { "$push": { "scores": 89 } } # Add a single item to the array
+)
+for doc in col_arr.find ({}):
+    print (doc)
+
+print ('--- Push ---')
+col_arr.update_many (
+   { "id": 0 },
+   { "$push": { "scores": {
+       "$each": [51, 55, 59, 42] , # Add multiple items to the array
+       "$sort": { "scores": -1 } } } }
+)
+for doc in col_arr.find ({}):
+    print (doc)
+
+print ('--- Push at position ---')
+col_arr.update_many (
+   { "id": 0 },
+   { "$push": { "scores": {
+       "$each": [99, 999], # Add multiple items to the array
+       "$position": 3, # at position 3. Use negative position to count from the end of the array
+       "$sort": { "scores": -1 } } } }
+)
+for doc in col_arr.find ({}):
+    print (doc)
+
+print ('--- Pop ---') # Removes first or last item from array
+col_arr.update_many (
+   { "id": 0 },
+   { "$pop": { "scores": 1}} # Removes last item from the array
+)
+for doc in col_arr.find ({}):
+    print (doc)
+
+print ('--- Pull ---')
+col_arr.update_many (
+   { }, # All documents
+   { "$pull": { "scores": {"$gt": 50}}} # Removes items greater than 50 from the array
+)
+for doc in col_arr.find ({}):
+    print (doc)
+
+col_stu = db.students
+col_stu.delete_many ({})
+col_stu.insert_many (students)
+col_stu2 = db.students2
+col_stu2.delete_many ({})
+col_stu2.insert_many (students2)
+
+# Array element modifications
+print ('--- $ ---')
+col_stu.update_one (
+   { "id": 1, "grades": 92 },
+   { "$set": { "grades.$": 82 } } # Updates first occurence of 92 to 82. $ is the position not known before the query filter. $ is the query result's first matched element
+)
+for doc in col_stu.find ({}):
+    print (doc)
+print ('---------')
+
+col_stu2.update_one (
+   { "id": 1, "grades.grade": 95 },
+   { "$set": { "grades.$.mean" : 105 } } # Updates array element's mean value that satisfies the query
+)
+for doc in col_stu2.find ({}):
+    print (doc)
+print ('---------')
+
+print ('--- $[] ---')
+col_stu.update_many (
+   { }, # Updates all elements in the array
+   { "$inc": { "grades.$[]": 10 } },
+   upsert = True
+)
+for doc in col_stu.find ({}):
+    print (doc)
+print ('---------')
+
+col_stu2.update_many (
+   { }, # Updates all documents in the array
+   { "$inc": { "grades.$[].mean" : -2 } },
+   upsert = True
+)
+for doc in col_stu2.find ({}):
+    print (doc)
+print ('---------')
+
+col_stu.update_many (
+   { }, # Updates all elements in the array based on the array filter
+   { "$set": { "grades.$[elem]": 99 } },
+     array_filters = [ { "elem": {"$gt": 100 }} ],
+     upsert = True 
+)
+for doc in col_stu.find ({}):
+    print (doc)
+print ('---------')
+
+col_stu2.update_many (
+   { }, # Updates all documents in the array based on the array filter
+   { "$set": { "grades.$[elem].grade": 99 } },
+     array_filters = [ { "elem.grade": 100 } ],
+     upsert = True 
+)
+for doc in col_stu2.find ({}):
+    print (doc)
+print ('---------')
+
+# --------------------------------------------------------------------
+
+# *** Value in a document less than the collection average (trying ti find a solution) ***
+# Needs two query!
+qtest.delete_many (query) # Delete docs that match query criteria
+qtest.insert_many (persons)
+
+# Value greater than average
+result = qtest.find( {"$expr": {"$gt": [ { "$avg": "$dims.length" }, "$dims.length" ] } }, { "average_length": { "$avg": "$dims.length" } })
+for doc in result:
+    print (doc)
+print ('---------')
+
+result = qtest.aggregate([
+  {"$group": {
+    "_id": None, 
+    "avg_length": { "$avg": "$dims.length" }, 
+    "avg_height": { "$avg": "$dims.height" },
+    "ind_length": { "$addToSet": "$dims.length"}, # Individual lengths that belong to the group that was averaged. In this case: all of them
+    "ind_name": { "$addToSet": "$name"}
+  }},
+  { "$project": {"average length":"$avg_length", "individual length": {"$filter": {"input": "$ind_length", "as": "ind_length", "cond": {"$lt": ["$$ind_length", "$avg_length"]}}},
+                 
+    "individual name":"$ind_name"}}
+])
+for doc in result:
+    print (doc)
+print ('---------')
+
 
 # --------------------------------------------------------------------
 

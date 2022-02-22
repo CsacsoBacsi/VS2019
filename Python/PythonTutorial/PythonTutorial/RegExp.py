@@ -25,9 +25,9 @@ Can be combined with classes: [\s,abc]
 p = re.compile ('a[\S]*')
 print ('a[\S]', p.search ('abcbd n')) # Matches till d. After d there is a space char
 p = re.compile ('a[\D]*') # Non-decimal digits
-print ('a[\S]', p.search ('abc5bd1n')) # Matches till c
+print ('a[\D]', p.search ('abc5bd1n')) # Matches till c
 p = re.compile ('a[^0-9]*') # Non-decimal digits
-print ('a[\S]', p.search ('abc5bd1n')) # Matches till c. ^ in a set it means complement
+print ('a[^0-9]', p.search ('abc5bd1n')) # Matches till c. ^ in a set it means complement
 
 # *** Repeating things ***
 """
@@ -92,7 +92,7 @@ else:
 
 print (re.match ('[bcd]+b', 'abcbdabmbertdb')) # Implicit compilation and calls the function. No need for pattern object
 p = re.compile ('a[bcd]+b', re.IGNORECASE) # Compilation flags. MULTILINE affects ^ and $ as they are applied after each newline
-print (p.match ('ABCBDABMBERTDB'))
+print (p.match ('ABCBDBMBERTDB'))
 
 # --------------------------------------------------------------------
 
@@ -111,7 +111,7 @@ print (re.findall ('(abs|bra)$', 'abrak'))
 
 # Search and replace
 p = re.compile('(blue|white|red)')
-p.sub ('colour', 'blue socks and red shoes')
+cc = p.sub ('colour', 'blue socks and red shoes')
 
 p = re.compile (r'^(create.+table).+udm\.')
 m = p.search ('create  table  udm.claims as (')
@@ -134,8 +134,8 @@ print (re.match('<.*?>', s).group()) # returns <html> Stops as early as it can
 # Practice
 print (re.search ('abcm*y', 'abcy')) # abcy
 print (re.search ('abc[opk*]y', 'abcy')) # None. Tries abc, any of op zero or more times k* then y. op can not be found!
-print (re.search ('abc[opk]*y', 'abcy')) # abcy. Tries abc, any of opk zero or more times then y
-print (re.search ('abc(opk)*y', 'abcy')) # abcy. Tries abc, the word (group) opk zero or more times then y
+print (re.search ('abc[opky]*y', 'abcpypyoy')) # abcy. Tries abc, any of opk zero or more times then y
+print (re.search ('abc(opk)*y', 'abcpy')) # abcy. Tries abc, the word (group) opk zero or more times then y
 print (re.search ('a[bcd]*b', 'abcbd')) # abcb. Starts with a, any of bcd zero or more times. Finds d at the end as it is greedy. Backtracks and finds b
 print (re.search ('a[bcd]', 'abcbd')) # ab. Starts with a, any of bcd. Finds b and stops. Non-greedy
 print (re.search ('a[bcd]d', 'abcbd')) # None. Starts with a, any of bcd finds b then d but there is a c after b
@@ -173,6 +173,65 @@ for line in fin:
 
 fin.close()
 fout.close()
+
+# --------------------------------------------------------------------
+
+api_url = 'https://aventri.com/v2/ereg/listEvents/?accesstoken=a547f5deA32CA8013Ab849faB90&lastmodified-gt=2022-02-15&limit=1' # First param
+api_url2 = 'https://aventri.com/v2/ereg/listEvents/?lastmodified-gt=2022-02-15&limit=1&accesstoken=a547f5deA32CA8013Ab849faB90&offset=100' # Middle param
+api_url3 = 'https://aventri.com/v2/ereg/listEvents/?accesstoken=a547f5deA32CA8013Ab849faB90' # Only param
+api_url4 = 'https://aventri.com/v2/ereg/listEvents/?lastmodified-gt=2022-02-15&limit=1&accesstoken=a547f5deA32CA8013Ab849faB90' # Last param
+
+s = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at*", api_url, count=1).replace ("*at*", "accesstoken=***Access token***")
+s2 = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at*", api_url2, count=1).replace ("*at*", "accesstoken=***Access token***")
+s3 = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at**", api_url3, count=1).replace ("*at*", "accesstoken=***Access token***")
+s4 = re.sub (r"accesstoken=([a-zA-Z0-9])+", r"*at*", api_url4, count=1).replace ("*at*", "accesstoken=***Access token***")
+print (s)
+
+pattern = r"Cook"
+sequence = "Cookie"
+if re.match (pattern, sequence):
+    print ("Match!")
+else: print ("Not a match!")
+
+s = re.search (r'Co.k.e', 'Cookie').group () # Without group it is just a match object!
+s = re.search (r'^Eat', "Eat cake!").group () # Match at the beginning of the string
+s= re.search (r'cake$', "Cake! Let's eat cake").group () # Match at the end
+# group () without parameters is the whole matched string
+
+s = re.search (r'[0-6]', 'Number: 5').group () # 5
+s = re.search (r'[abc]', 'x-ray').group () # a
+
+s = re.search(r'Not a\sregular character', 'Not a regular character').group () # \ = escaping. \s = space char
+
+'''
+Character(s)	What it does
+.	A period. Matches any single character except the newline character.
+^	A caret. Matches a pattern at the start of the string.
+\A	Uppercase A. Matches only at the start of the string.
+$	Dollar sign. Matches the end of the string.
+\Z	Uppercase Z. Matches only at the end of the string.
+[ ]	Matches the set of characters you specify within it.
+\	∙ If the character following the backslash is a recognized escape character, then the special meaning of the term is taken.
+∙ Else the backslash () is treated like any other character and passed through.
+∙ It can be used in front of all the metacharacters to remove their special meaning.
+\w	Lowercase w. Matches any single letter, digit, or underscore.
+\W	Uppercase W. Matches any character not part of \w (lowercase w).
+\s	Lowercase s. Matches a single whitespace character like: space, newline, tab, return.
+\S	Uppercase S. Matches any character not part of \s (lowercase s).
+\d	Lowercase d. Matches decimal digit 0-9.
+\D	Uppercase D. Matches any character that is not a decimal digit.
+\t	Lowercase t. Matches tab.
+\n	Lowercase n. Matches newline.
+\r	Lowercase r. Matches return.
+\b	Lowercase b. Matches only the beginning or end of the word.
++	Checks if the preceding character appears one or more times.
+*	Checks if the preceding character appears zero or more times.
+?	∙ Checks if the preceding character appears exactly zero or one time.
+∙ Specifies a non-greedy version of +, *
+{ }	Checks for an explicit number of times.
+( )	Creates a group when performing matches.
+< >	Creates a named group when performing matches.
+'''
 
 # --------------------------------------------------------------------
 
