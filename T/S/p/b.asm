@@ -35,7 +35,7 @@ getValFromASM proc
 	;push rip
 	;push eip
 	;push ip
-	mov rax, label1
+	mov rax, label1 + 3
 label1:
 
 	ret
