@@ -15,8 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="MyAsm.asm">
+    <MASM Include="Youtube-tutorial.asm">
       <Filter>Source Files</Filter>
     </MASM>
+    <MASM Include="..\..\..\..\..\VS2019Projects\Tutorial\ASM\64bitASM\64bitASM\MyAsm.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

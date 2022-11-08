@@ -1,2 +1,2 @@
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
-Debug|x64|D:\VS2017Projects\Tutorial\ASM\Practice\|
+PlatformToolSet=v143:VCToolArchitecture=Native64Bit:VCToolsVersion=14.33.31629:TargetPlatformVersion=10.0.22000.0:
+Debug|x64|D:\Git\Tutorial\ASM\Practice\|
