@@ -19,7 +19,7 @@ int func (int a, int b, int c, int d, int e, int f) {
 int main()
 {
 	int ch = 1 ;
-	ch = func (1, 2, 3, 4, 5, 6) ;
+	ch = func (1, 2, 3, 4, 5, 6) ; // First four params passed in RCX, RDX, R8, R9. The rest on the stack
 
 	cout << "Retval from ASM:" << getValFromASM(9, 10, 11, 12, 13, 14, 15) << endl;
 	ch = _getch(); // Wait for a key to be pressed. Prevents the execution window from closing
