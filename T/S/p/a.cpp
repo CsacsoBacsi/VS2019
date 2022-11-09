@@ -13,7 +13,7 @@ int func (int a, int b, int c, int d, int e, int f) {
 	int h = 254;
 	int i = g + d ;
 	int j = h + e ;
-	return i + j;
+	return i + j ;
 }
 
 int main()
