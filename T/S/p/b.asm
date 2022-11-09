@@ -8,6 +8,18 @@ Myvar1 db 12d
 Myvar2 dw 512d
 Myvar2reserve dw 1d
 
+mbyte db 1d
+mword dw 40000d
+mdoubleword dd 1000000d
+mdoubleword2 dd 'ABCD' ; Init each byte
+myquadword dq 10000000000d
+mbytearray db 100 dup (?)
+mbytearray2 db 1, 2, 3, 4
+mbytearray3 db 'My byte array 3', 0 ; With a terminator 0 char
+m2dimbytearray db 100 dup (10 dup (5))
+mreal4 real4 10.5
+myreal8 real8 10.54345433
+
 .code ; Code segment
 start: ; Compulsory label. Program starting point
 
@@ -120,6 +132,28 @@ l_end:
 loop1:
 	dec ecx
 	jnz loop1 ; Jump if not zero
+
+	; AND
+	mov al, 10011001b
+	mov bl, 11000111b
+	and al, bl
+
+	; OR
+	mov al, 10011001b
+	OR al, bl
+
+	; XOR
+	mov al, 10011001b
+	xor al, bl
+
+	; RDRAND
+regenerate:
+	rdrand rax
+	mov bx, 0
+	rdrand bx
+	jc generated
+	jmp regenerate
+generated:
 
 	ret
 getValFromASM endp

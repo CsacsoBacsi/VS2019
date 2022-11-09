@@ -131,6 +131,7 @@
     <MASM Include="b.asm">
       <FileType>Document</FileType>
     </MASM>
+    <MASM Include="c.asm" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp" />

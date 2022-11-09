@@ -18,6 +18,9 @@
     <MASM Include="b.asm">
       <Filter>Source Files</Filter>
     </MASM>
+    <MASM Include="c.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp">
