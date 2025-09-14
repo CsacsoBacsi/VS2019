@@ -162,7 +162,7 @@ print (type (x)) # Check type
 # All and any
 print (all ([1, 2, 3, 4])) # has to test to the end!
 # True
-print (all ([0, 1, 2, 3, 4])) # 0 is False in a boolean context!
+print (all ([0, 1, 2, 3, 4])) # 0 is False in a boolean context
 # False      ^--stops here!
 print (all ([]))
 # True gets to end, so True!
