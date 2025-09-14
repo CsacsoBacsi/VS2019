@@ -10,3 +10,6 @@ T/S/.vs/S/v17/Browse.VC.opendb
 T/S/.vs/S/v17/.suo
 .gitignore
 /Python/PythonTutorial/.vs/PythonTutorial
+/Misc/PySpark/Spark
+/CppProperties.json
+/.gitignore
