@@ -5,7 +5,7 @@ import sys
 
 # --------------------------------------------------------------------
 
-print ("Hello, World!") # First ever Python program/command
+print ("Hello, World!!") # First ever Python program/command
 print (sys.argv[0], sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], len (sys.argv)) # Length of argv as it is a list
 
 # --------------------------------------------------------------------
@@ -23,7 +23,7 @@ y = 10
 print (id (x), id (y))
 
 str1 = "It's a string!"
-# str [1] = "r" # Errors. Strings are immutable!
+# str [1] = "r" # Errors. Strings are immutable! x
 a = "Linux"
 b = "Linux"
 print (a is b)
@@ -45,8 +45,10 @@ a = 5
 b = "hello"
 lang = 0 # This could be a language index
 format = ["A= #%d, B = %s\n", "C = %d, D = %s\n"] # It is a list, so can be indexed. Two formats for two different languages for example
-buffer = format [lang] % (a, b)
+buffer = format [lang] % (a, b) # C++-like formatting
 print (buffer)
+
+print (f"A= #{ a }, B = { b }") # f string
 
 # --------------------------------------------------------------------
 
